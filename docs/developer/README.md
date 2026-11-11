@@ -15,6 +15,9 @@ Case-Room includes standalone, interactive HTML diagrams authored with [Archify]
 | 🏛️ **[System Architecture](architecture.html)** | Standalone HTML | Interactive component topology mapping student mobile ingress, Gradio TLS tunneling, dialogue guardrails, microkernel plugins, context cache management, and Google Gemini API integration. Supports dark/light themes, live connection tracing, and SVG export. |
 | 🧪 **[Testing & SDD Pipeline](testing.html)** | Standalone HTML | Interactive workflow diagram illustrating the 5-Level Testing Pyramid, dual-layer golden dataset grader, Ollama user simulator, and the Spec Guardian audit loop. |
 
+> [!TIP]
+> **Semantic Passport & IDE Jumping**: Clicking any component or node in either interactive HTML diagram opens its **Semantic Passport** panel with source links and direct IDE jumping (`⚡ Open in IDE`).
+
 ---
 
 ## 📚 Architectural Records (ADRs)
@@ -22,74 +25,6 @@ Case-Room includes standalone, interactive HTML diagrams authored with [Archify]
 Key architectural decisions, trade-offs, and historical context are formally documented in:
 
 - **[Architecture Decision Records (ADR.md)](ADR.md)**: 16 approved ADRs covering context caching (ADR 002), restart recovery (ADR 003), staged mode broadcasting (ADR 014), microkernel plugins (ADR 016), and tiered evaluation (ADR 011).
-
----
-
-## 🏗️ Codebase Layout & Subsystem Ownership
-
-```text
-case-room/
-├── src/                               # Application source code
-│   ├── core/                          # Domain engines & infrastructure
-│   │   ├── cache_manager.py           # Gemini context cache lifecycle & in-memory fallback
-│   │   ├── dialogue_utils.py          # Message extraction, history sanitization & fastpaths
-│   │   ├── logger.py                  # Thread-safe JSONL telemetry & regex PII redaction
-│   │   ├── plugin_protocol.py         # Microkernel ModePlugin protocol & registry
-│   │   └── quiz_engine.py             # Bloom's quiz progression, hints & scorecard rendering
-│   │
-│   ├── ui/                            # Presentation & admin controls
-│   │   ├── admin_handlers.py          # Admin authentication, mode staging & dashboard feeds
-│   │   ├── chart_generator.py         # Matplotlib timeline & latency visualizations
-│   │   ├── client_scripts.py          # Client-side JavaScript hooks & theme toggling
-│   │   ├── event_cards.py             # Mode switch cards & post-quiz waiting cards
-│   │   ├── gradio_app.py              # Gradio 6 Blocks layout & component binding
-│   │   ├── qr_generator.py            # Screen projection QR code generator
-│   │   └── ui_theme.py                # Mobile CSS, touch styling, tokens & color contrasts
-│   │
-│   ├── plugins/                       # Pedagogical operating modes
-│   │   └── standard_modes.py          # Built-in Mode 1 (Q&A) and Mode 2 (Interactive Quiz)
-│   │
-│   ├── analytics_engine/              # Telemetry analysis & reporting
-│   │   ├── analytics.py               # Gini participation equality, turn stats & Bloom counts
-│   │   └── analytics_pdf.py           # FPDF2 4-page executive debrief PDF generation
-│   │
-│   ├── tools/                         # Offline utilities & evaluation harnesses
-│   │   ├── eval_golden_dataset.py     # 50-case benchmark harness with LLM-as-a-judge
-│   │   ├── golden_scorecard.py        # Markdown scorecard generator for benchmarks
-│   │   └── preprocess_case.py         # Case PDF text extractor & noise scrubber
-│   │
-│   ├── chatbot.py                     # Main Gradio application & streaming loop
-│   ├── config.py                      # Global AppState singleton & case study discovery
-│   └── main.py                        # Alternative launcher entrypoint
-│
-├── specs/                             # EARS requirements & AST traceability
-│   ├── analytics/                     # Telemetry & reporting specs
-│   ├── core/                          # Dialogue, cache, mode & privacy specs
-│   ├── eval/                          # Evaluation tools specs
-│   ├── ui/                            # Theme, contrast & admin specs
-│   └── traceability.json              # Normalized SHA-256 AST audit lockfile
-│
-├── tests/                             # 5-Level Testing Pyramid test suites
-│   ├── conftest.py                    # Pytest fixtures & environment setup
-│   ├── test_chatbot.py                # Level 1: Unit & pre-flight guardrail suite
-│   ├── test_chat_guardrails.py        # Level 1: Input edge cases & payload parsing
-│   ├── test_quiz_engine.py            # Level 1: MCQ options, hints & scorecards
-│   ├── test_multi_case.py             # Level 1: Case discovery & preprocessor
-│   ├── test_ui_theme.py               # Level 1: WCAG AA/AAA contrast ratios
-│   ├── test_semantic_proximity.py     # Level 2: Cosine factual embeddings
-│   ├── test_pii_sanitization.py       # Level 2: Student ID & phone redaction
-│   ├── test_analytics.py              # Level 2: Gini index & PDF report generation
-│   ├── test_golden_dataset.py         # Level 3: 50-case golden benchmark suite
-│   ├── test_user_simulator.py         # Level 4: Ollama agentic multi-turn simulator
-│   └── test_load.py                   # Level 5: 50-student concurrency stress test
-│
-└── docs/                              # Project documentation
-    ├── developer/                     # Developer guides, ADRs & architecture HTML
-    ├── ADDING_A_CASE_STUDY.md         # Case onboarding guide
-    ├── SETUP_GUIDE.md                 # End-user setup guide
-    ├── TROUBLESHOOTING.md             # Common issues & recovery
-    └── USER_GUIDE.md                  # Screen-by-screen operations guide
-```
 
 ---
 
@@ -203,3 +138,72 @@ To add a new operating mode to Jarvis:
        )
    ```
 3. The plugin registry automatically discovers and exposes the new mode in the Instructor Admin Panel.
+
+---
+
+## 🏗️ Codebase Layout & Subsystem Ownership
+
+```text
+case-room/
+├── src/                               # Application source code
+│   ├── core/                          # Domain engines & infrastructure
+│   │   ├── cache_manager.py           # Gemini context cache lifecycle & in-memory fallback
+│   │   ├── dialogue_utils.py          # Message extraction, history sanitization & fastpaths
+│   │   ├── logger.py                  # Thread-safe JSONL telemetry & regex PII redaction
+│   │   ├── plugin_protocol.py         # Microkernel ModePlugin protocol & registry
+│   │   └── quiz_engine.py             # Bloom's quiz progression, hints & scorecard rendering
+│   │
+│   ├── ui/                            # Presentation & admin controls
+│   │   ├── admin_handlers.py          # Admin authentication, mode staging & dashboard feeds
+│   │   ├── chart_generator.py         # Matplotlib timeline & latency visualizations
+│   │   ├── client_scripts.py          # Client-side JavaScript hooks & theme toggling
+│   │   ├── event_cards.py             # Mode switch cards & post-quiz waiting cards
+│   │   ├── gradio_app.py              # Gradio 6 Blocks layout & component binding
+│   │   ├── qr_generator.py            # Screen projection QR code generator
+│   │   └── ui_theme.py                # Mobile CSS, touch styling, tokens & color contrasts
+│   │
+│   ├── plugins/                       # Pedagogical operating modes
+│   │   └── standard_modes.py          # Built-in Mode 1 (Q&A) and Mode 2 (Interactive Quiz)
+│   │
+│   ├── analytics_engine/              # Telemetry analysis & reporting
+│   │   ├── analytics.py               # Gini participation equality, turn stats & Bloom counts
+│   │   └── analytics_pdf.py           # FPDF2 4-page executive debrief PDF generation
+│   │
+│   ├── tools/                         # Offline utilities & evaluation harnesses
+│   │   ├── eval_golden_dataset.py     # 50-case benchmark harness with LLM-as-a-judge
+│   │   ├── golden_scorecard.py        # Markdown scorecard generator for benchmarks
+│   │   └── preprocess_case.py         # Case PDF text extractor & noise scrubber
+│   │
+│   ├── chatbot.py                     # Main Gradio application & streaming loop
+│   ├── config.py                      # Global AppState singleton & case study discovery
+│   └── main.py                        # Alternative launcher entrypoint
+│
+├── specs/                             # EARS requirements & AST traceability
+│   ├── analytics/                     # Telemetry & reporting specs
+│   ├── core/                          # Dialogue, cache, mode & privacy specs
+│   ├── eval/                          # Evaluation tools specs
+│   ├── ui/                            # Theme, contrast & admin specs
+│   └── traceability.json              # Normalized SHA-256 AST audit lockfile
+│
+├── tests/                             # 5-Level Testing Pyramid test suites
+│   ├── conftest.py                    # Pytest fixtures & environment setup
+│   ├── test_chatbot.py                # Level 1: Unit & pre-flight guardrail suite
+│   ├── test_chat_guardrails.py        # Level 1: Input edge cases & payload parsing
+│   ├── test_quiz_engine.py            # Level 1: MCQ options, hints & scorecards
+│   ├── test_multi_case.py             # Level 1: Case discovery & preprocessor
+│   ├── test_ui_theme.py               # Level 1: WCAG AA/AAA contrast ratios
+│   ├── test_semantic_proximity.py     # Level 2: Cosine factual embeddings
+│   ├── test_pii_sanitization.py       # Level 2: Student ID & phone redaction
+│   ├── test_analytics.py              # Level 2: Gini index & PDF report generation
+│   ├── test_golden_dataset.py         # Level 3: 50-case golden benchmark suite
+│   ├── test_user_simulator.py         # Level 4: Ollama agentic multi-turn simulator
+│   └── test_load.py                   # Level 5: 50-student concurrency stress test
+│
+└── docs/                              # Project documentation
+    ├── developer/                     # Developer guides, ADRs & architecture HTML
+    ├── ADDING_A_CASE_STUDY.md         # Case onboarding guide
+    ├── SETUP_GUIDE.md                 # End-user setup guide
+    ├── TROUBLESHOOTING.md             # Common issues & recovery
+    └── USER_GUIDE.md                  # Screen-by-screen operations guide
+```
+

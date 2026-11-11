@@ -57,6 +57,7 @@ The terminal prints a public link (`https://xxxx.gradio.live`) and saves a QR co
 | 🧭 **[User Guide](docs/USER_GUIDE.md)** | A tour of every screen, running a live class, and what to do after class |
 | 📚 **[Adding Your Own Case Study](docs/ADDING_A_CASE_STUDY.md)** | Loading your PDFs, adding exhibit data, and writing your own quiz |
 | 🚑 **[Troubleshooting](docs/TROUBLESHOOTING.md)** | Fixes for common problems before and during class |
+| 💻 **[Developer Guide](docs/developer/README.md)** | System architecture, interactive diagrams, ADRs, and testing protocols |
 
 ---
 
@@ -86,7 +87,7 @@ Chat logs are stored **only on your laptop** in the `logs/` folder. They are nev
 Case-Room is a Python 3.13 + [Gradio](https://www.gradio.app/) app that uses the [Google GenAI SDK](https://github.com/googleapis/python-genai). 
 
 - 📖 **[Developer & Architecture Guide](docs/developer/README.md)**: Deep dive into the system design, microkernel plugin protocol, Spec-Driven Development (SDD) workflow, and the 5-Level Testing Pyramid.
-- 🏛️ **[Interactive Architecture Diagram](docs/developer/architecture.html)** & 🧪 **[Testing Pipeline Diagram](docs/developer/testing.html)**: Standalone explorable HTML diagrams.
+- 🏛️ **[Interactive Architecture Diagram](docs/developer/architecture.html)** & 🧪 **[Testing Pipeline Diagram](docs/developer/testing.html)**: Standalone explorable HTML diagrams with Semantic Passport and IDE jumping.
 - 📐 **[Architecture Decision Records (ADR.md)](docs/developer/ADR.md)**: Formal records of design decisions and trade-offs.
 
 To run the routine unit tests:
