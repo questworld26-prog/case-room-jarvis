@@ -83,7 +83,13 @@ Chat logs are stored **only on your laptop** in the `logs/` folder. They are nev
 
 ## For developers
 
-Case-Room is a Python 3.13 + [Gradio](https://www.gradio.app/) app that uses the [Google GenAI SDK](https://github.com/googleapis/python-genai). New teaching modes can be added as plugins in `src/plugins/` (see `src/core/plugin_protocol.py`). Design decisions are recorded in [docs/ADR.md](docs/ADR.md), and requirements live in [specs/](specs/). To run the unit tests:
+Case-Room is a Python 3.13 + [Gradio](https://www.gradio.app/) app that uses the [Google GenAI SDK](https://github.com/googleapis/python-genai). 
+
+- 📖 **[Developer & Architecture Guide](docs/developer/README.md)**: Deep dive into the system design, microkernel plugin protocol, Spec-Driven Development (SDD) workflow, and the 5-Level Testing Pyramid.
+- 🏛️ **[Interactive Architecture Diagram](docs/developer/architecture.html)** & 🧪 **[Testing Pipeline Diagram](docs/developer/testing.html)**: Standalone explorable HTML diagrams.
+- 📐 **[Architecture Decision Records (ADR.md)](docs/developer/ADR.md)**: Formal records of design decisions and trade-offs.
+
+To run the routine unit tests:
 
 ```bash
 uv run pytest tests/test_chatbot.py -v

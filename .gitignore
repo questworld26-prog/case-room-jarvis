@@ -14,6 +14,7 @@ wheels/
 # Application runtime cache & logs
 .gradio/
 .pytest_cache/
+.archify/
 logs/
 static/classroom_qr.png
 static/generated_plots/
