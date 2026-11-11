@@ -1,0 +1,534 @@
+{
+  "last_audited_at": "2026-11-11T09:13:46.553230+00:00",
+  "total_requirements": 20,
+  "total_criteria": 65,
+  "verified_criteria_count": 65,
+  "planned_requirements_count": 0,
+  "reverse_traceability": {
+    "untagged_files_count": 0,
+    "untagged_src_symbols_count": 0,
+    "untagged_tests_count": 0,
+    "orphan_tags_count": 0
+  },
+  "semantic_alignment": {
+    "stacked_test_tags_count": 0,
+    "cross_link_mismatches_count": 0,
+    "weak_test_assertions_count": 0,
+    "ac_anchor_mismatches_count": 0
+  },
+  "status": "PASS",
+  "requirements": [
+    {
+      "requirement_id": "ANLY-001",
+      "title": "Classroom Telemetry Analytics and PDF Report Generation",
+      "spec_file": "specs/analytics/reporting.md",
+      "is_planned": false,
+      "sha256": "7b48a3c9a831a18911f607c7f7680dfb179c5f5c6bb4f2985e9aeb621209144e",
+      "verified_sha256": "7b48a3c9a831a18911f607c7f7680dfb179c5f5c6bb4f2985e9aeb621209144e",
+      "acceptance_criteria": [
+        "AC-ANLY-001.1",
+        "AC-ANLY-001.2",
+        "AC-ANLY-001.3",
+        "AC-ANLY-001.4"
+      ],
+      "verified_criteria": [
+        "AC-ANLY-001.1",
+        "AC-ANLY-001.2",
+        "AC-ANLY-001.3",
+        "AC-ANLY-001.4"
+      ],
+      "implementation_files": [
+        "src/analytics_engine/analytics.py",
+        "src/analytics_engine/analytics_charts.py",
+        "src/analytics_engine/analytics_pdf.py",
+        "src/analytics_engine/analytics_pdf_page12.py",
+        "src/analytics_engine/analytics_pdf_sections.py",
+        "src/analytics_engine/mode_relevance.py",
+        "src/analytics_engine/pdf_text.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "CACHE-001",
+      "title": "Dynamic Case Discovery and Preprocessing Pipeline",
+      "spec_file": "specs/core/case_cache_config.md",
+      "is_planned": false,
+      "sha256": "254841d0ad0f1fa8765d1cc8dc4701c2c2806a20416f21c48791ba7d297de23a",
+      "verified_sha256": "254841d0ad0f1fa8765d1cc8dc4701c2c2806a20416f21c48791ba7d297de23a",
+      "acceptance_criteria": [
+        "AC-CACHE-001.1",
+        "AC-CACHE-001.2"
+      ],
+      "verified_criteria": [
+        "AC-CACHE-001.1",
+        "AC-CACHE-001.2"
+      ],
+      "implementation_files": [
+        "src/config.py",
+        "src/core/cache_manager.py",
+        "src/tools/preprocess_case.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "CACHE-002",
+      "title": "Context Cache Lifecycle and Recovery",
+      "spec_file": "specs/core/case_cache_config.md",
+      "is_planned": false,
+      "sha256": "64e35bc3f8c25abbfc3dfea5ea82f9d8f7341771b71e8b4c53c118c850876b82",
+      "verified_sha256": "64e35bc3f8c25abbfc3dfea5ea82f9d8f7341771b71e8b4c53c118c850876b82",
+      "acceptance_criteria": [
+        "AC-CACHE-002.1",
+        "AC-CACHE-002.2"
+      ],
+      "verified_criteria": [
+        "AC-CACHE-002.1",
+        "AC-CACHE-002.2"
+      ],
+      "implementation_files": [
+        "src/config.py",
+        "src/core/cache_manager.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "CHAT-001",
+      "title": "Input Validation and Pre-Flight Guardrail Interception",
+      "spec_file": "specs/core/chat_dialogue.md",
+      "is_planned": false,
+      "sha256": "0c75daf1e5a0f67b99f3e0af8eef777933e767f6f9a3297c2606e5ef4f2dae73",
+      "verified_sha256": "0c75daf1e5a0f67b99f3e0af8eef777933e767f6f9a3297c2606e5ef4f2dae73",
+      "acceptance_criteria": [
+        "AC-CHAT-001.1",
+        "AC-CHAT-001.2",
+        "AC-CHAT-001.3",
+        "AC-CHAT-001.4"
+      ],
+      "verified_criteria": [
+        "AC-CHAT-001.1",
+        "AC-CHAT-001.2",
+        "AC-CHAT-001.3",
+        "AC-CHAT-001.4"
+      ],
+      "implementation_files": [
+        "src/chatbot.py",
+        "src/config.py",
+        "src/core/dialogue_utils.py",
+        "src/main.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "CHAT-002",
+      "title": "Instant Greeting and Welcome Card Fast-Path",
+      "spec_file": "specs/core/chat_dialogue.md",
+      "is_planned": false,
+      "sha256": "5b095fb35f6e5fce29a8b23220f95abb753fdcfab0675df7b0257c3a630b8882",
+      "verified_sha256": "5b095fb35f6e5fce29a8b23220f95abb753fdcfab0675df7b0257c3a630b8882",
+      "acceptance_criteria": [
+        "AC-CHAT-002.1",
+        "AC-CHAT-002.2",
+        "AC-CHAT-002.3",
+        "AC-CHAT-002.4"
+      ],
+      "verified_criteria": [
+        "AC-CHAT-002.1",
+        "AC-CHAT-002.2",
+        "AC-CHAT-002.3",
+        "AC-CHAT-002.4"
+      ],
+      "implementation_files": [
+        "src/chatbot.py",
+        "src/core/dialogue_utils.py",
+        "src/plugins/standard_modes.py",
+        "src/ui/event_cards.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "CHAT-003",
+      "title": "Dialogue History Normalization and Mermaid Sanitization",
+      "spec_file": "specs/core/chat_dialogue.md",
+      "is_planned": false,
+      "sha256": "e0498a07e17f74caa76382beaece35e76e11f3000d6a04557b0d55db60059e7e",
+      "verified_sha256": "e0498a07e17f74caa76382beaece35e76e11f3000d6a04557b0d55db60059e7e",
+      "acceptance_criteria": [
+        "AC-CHAT-003.1",
+        "AC-CHAT-003.2",
+        "AC-CHAT-003.3",
+        "AC-CHAT-003.4"
+      ],
+      "verified_criteria": [
+        "AC-CHAT-003.1",
+        "AC-CHAT-003.2",
+        "AC-CHAT-003.3",
+        "AC-CHAT-003.4"
+      ],
+      "implementation_files": [
+        "src/chatbot.py",
+        "src/core/dialogue_utils.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "CHAT-004",
+      "title": "Scope Boundaries, Output Limits, Visual Fallbacks and Concurrency",
+      "spec_file": "specs/core/chat_dialogue.md",
+      "is_planned": false,
+      "sha256": "d16005eb7ff8d2771ca401a1a10c49fa79e29241c777ab643970cb3a3dc48e00",
+      "verified_sha256": "d16005eb7ff8d2771ca401a1a10c49fa79e29241c777ab643970cb3a3dc48e00",
+      "acceptance_criteria": [
+        "AC-CHAT-004.1",
+        "AC-CHAT-004.2",
+        "AC-CHAT-004.3",
+        "AC-CHAT-004.4"
+      ],
+      "verified_criteria": [
+        "AC-CHAT-004.1",
+        "AC-CHAT-004.2",
+        "AC-CHAT-004.3",
+        "AC-CHAT-004.4"
+      ],
+      "implementation_files": [
+        "src/chatbot.py",
+        "src/config.py",
+        "src/ui/chart_generator.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "MODE-001",
+      "title": "Mode 1 Standard QA Pedagogical Mode",
+      "spec_file": "specs/core/pedagogical_modes.md",
+      "is_planned": false,
+      "sha256": "75269dd4b43883b9cae098fd47d5e498113c69bb13c1eb13b2e396f55abf4a02",
+      "verified_sha256": "75269dd4b43883b9cae098fd47d5e498113c69bb13c1eb13b2e396f55abf4a02",
+      "acceptance_criteria": [
+        "AC-MODE-001.1",
+        "AC-MODE-001.2",
+        "AC-MODE-001.3"
+      ],
+      "verified_criteria": [
+        "AC-MODE-001.1",
+        "AC-MODE-001.2",
+        "AC-MODE-001.3"
+      ],
+      "implementation_files": [
+        "src/chatbot.py",
+        "src/config.py",
+        "src/core/plugin_protocol.py",
+        "src/plugins/standard_modes.py",
+        "src/ui/event_cards.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "MODE-002",
+      "title": "Mode 2 Interactive Quiz and Assessment Pedagogical Mode",
+      "spec_file": "specs/core/pedagogical_modes.md",
+      "is_planned": false,
+      "sha256": "0a2b19e84f82b9a4132e4e2fff7a42988c3c903ac783cc0a4defe570fe4edfa2",
+      "verified_sha256": "0a2b19e84f82b9a4132e4e2fff7a42988c3c903ac783cc0a4defe570fe4edfa2",
+      "acceptance_criteria": [
+        "AC-MODE-002.1",
+        "AC-MODE-002.2",
+        "AC-MODE-002.3"
+      ],
+      "verified_criteria": [
+        "AC-MODE-002.1",
+        "AC-MODE-002.2",
+        "AC-MODE-002.3"
+      ],
+      "implementation_files": [
+        "src/chatbot.py",
+        "src/config.py",
+        "src/core/plugin_protocol.py",
+        "src/core/quiz_engine.py",
+        "src/plugins/standard_modes.py",
+        "src/ui/event_cards.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "QUIZ-001",
+      "title": "Multiple-Choice Parsing and Brand Casing Normalization",
+      "spec_file": "specs/core/quiz_pedagogy.md",
+      "is_planned": false,
+      "sha256": "94de4ae57dcf0dbce26aacdfc0135422fbc953477bf4f337251f6a98f35f54d6",
+      "verified_sha256": "94de4ae57dcf0dbce26aacdfc0135422fbc953477bf4f337251f6a98f35f54d6",
+      "acceptance_criteria": [
+        "AC-QUIZ-001.1",
+        "AC-QUIZ-001.2"
+      ],
+      "verified_criteria": [
+        "AC-QUIZ-001.1",
+        "AC-QUIZ-001.2"
+      ],
+      "implementation_files": [
+        "src/chatbot.py",
+        "src/config.py",
+        "src/core/dialogue_utils.py",
+        "src/core/quiz_engine.py",
+        "src/ui/event_cards.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "QUIZ-002",
+      "title": "Two-Attempt Quiz Scoring and Scorecard Generation",
+      "spec_file": "specs/core/quiz_pedagogy.md",
+      "is_planned": false,
+      "sha256": "9342c9b62787c11b0821b2f60152a1f80e2a5d3b192dc02c695cfd64c3fa2f63",
+      "verified_sha256": "9342c9b62787c11b0821b2f60152a1f80e2a5d3b192dc02c695cfd64c3fa2f63",
+      "acceptance_criteria": [
+        "AC-QUIZ-002.1",
+        "AC-QUIZ-002.2",
+        "AC-QUIZ-002.3",
+        "AC-QUIZ-002.4"
+      ],
+      "verified_criteria": [
+        "AC-QUIZ-002.1",
+        "AC-QUIZ-002.2",
+        "AC-QUIZ-002.3",
+        "AC-QUIZ-002.4"
+      ],
+      "implementation_files": [
+        "src/chatbot.py",
+        "src/core/quiz_engine.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "PRIV-001",
+      "title": "Student PII Redaction and Custom Detectors",
+      "spec_file": "specs/core/telemetry_privacy.md",
+      "is_planned": false,
+      "sha256": "838ac17e5130959ba5276c85890fc9a86f9de9aa862a0c65aa2330adf1a24370",
+      "verified_sha256": "838ac17e5130959ba5276c85890fc9a86f9de9aa862a0c65aa2330adf1a24370",
+      "acceptance_criteria": [
+        "AC-PRIV-001.1",
+        "AC-PRIV-001.2",
+        "AC-PRIV-001.3"
+      ],
+      "verified_criteria": [
+        "AC-PRIV-001.1",
+        "AC-PRIV-001.2",
+        "AC-PRIV-001.3"
+      ],
+      "implementation_files": [
+        "src/chatbot.py",
+        "src/core/logger.py",
+        "src/core/quiz_engine.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "PRIV-002",
+      "title": "Telemetry Log Sanitization and Environment Isolation",
+      "spec_file": "specs/core/telemetry_privacy.md",
+      "is_planned": false,
+      "sha256": "53967824dad275efbc4da2e27089131a76a5aea946458c98ae32899a942c8706",
+      "verified_sha256": "53967824dad275efbc4da2e27089131a76a5aea946458c98ae32899a942c8706",
+      "acceptance_criteria": [
+        "AC-PRIV-002.1",
+        "AC-PRIV-002.2",
+        "AC-PRIV-002.3"
+      ],
+      "verified_criteria": [
+        "AC-PRIV-002.1",
+        "AC-PRIV-002.2",
+        "AC-PRIV-002.3"
+      ],
+      "implementation_files": [
+        "src/analytics_engine/analytics.py",
+        "src/core/logger.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "EVAL-001",
+      "title": "Golden Benchmark Evaluation and Hallucination Guardrails",
+      "spec_file": "specs/eval/evaluation_tools.md",
+      "is_planned": false,
+      "sha256": "53b67bc2a47cde98a952b139cbba0b726a4cef62f747eb77056e8efe232d303a",
+      "verified_sha256": "53b67bc2a47cde98a952b139cbba0b726a4cef62f747eb77056e8efe232d303a",
+      "acceptance_criteria": [
+        "AC-EVAL-001.1",
+        "AC-EVAL-001.2",
+        "AC-EVAL-001.3"
+      ],
+      "verified_criteria": [
+        "AC-EVAL-001.1",
+        "AC-EVAL-001.2",
+        "AC-EVAL-001.3"
+      ],
+      "implementation_files": [
+        "src/chatbot.py",
+        "src/core/cache_manager.py",
+        "src/tools/eval_golden_dataset.py",
+        "src/tools/golden_scorecard.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "ADMIN-001",
+      "title": "Instructor Mode Staging, Broadcast and Runtime Configuration",
+      "spec_file": "specs/ui/instructor_admin.md",
+      "is_planned": false,
+      "sha256": "8e18ee44e972f77f63ebee6e76e2b68dc5f5267fee8d60f050d9cdc1943729c3",
+      "verified_sha256": "8e18ee44e972f77f63ebee6e76e2b68dc5f5267fee8d60f050d9cdc1943729c3",
+      "acceptance_criteria": [
+        "AC-ADMIN-001.1",
+        "AC-ADMIN-001.2",
+        "AC-ADMIN-001.3",
+        "AC-ADMIN-001.4",
+        "AC-ADMIN-001.5"
+      ],
+      "verified_criteria": [
+        "AC-ADMIN-001.1",
+        "AC-ADMIN-001.2",
+        "AC-ADMIN-001.3",
+        "AC-ADMIN-001.4",
+        "AC-ADMIN-001.5"
+      ],
+      "implementation_files": [
+        "src/chatbot.py",
+        "src/config.py",
+        "src/core/cache_manager.py",
+        "src/core/plugin_protocol.py",
+        "src/ui/admin_handlers.py",
+        "src/ui/event_cards.py",
+        "src/ui/gradio_app.py",
+        "src/ui/qr_generator.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "UI-001",
+      "title": "WCAG AA and AAA Color Contrast Compliance",
+      "spec_file": "specs/ui/theme_and_cards.md",
+      "is_planned": false,
+      "sha256": "779bc1c3b447b0135562417dc7433e623d09e43519d8dfe5497034ba75dcb499",
+      "verified_sha256": "779bc1c3b447b0135562417dc7433e623d09e43519d8dfe5497034ba75dcb499",
+      "acceptance_criteria": [
+        "AC-UI-001.1",
+        "AC-UI-001.2",
+        "AC-UI-001.3",
+        "AC-UI-001.4"
+      ],
+      "verified_criteria": [
+        "AC-UI-001.1",
+        "AC-UI-001.2",
+        "AC-UI-001.3",
+        "AC-UI-001.4"
+      ],
+      "implementation_files": [
+        "src/ui/styles/dark_theme.py",
+        "src/ui/styles/tokens.py",
+        "src/ui/ui_theme.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "UI-002",
+      "title": "Prompt Input and Student Name Pill CSS Token Architecture",
+      "spec_file": "specs/ui/theme_and_cards.md",
+      "is_planned": false,
+      "sha256": "2f0df87b63fb752a0e917a1ebc4ccb6d3eb6a19516d96332de781fbe74345fb9",
+      "verified_sha256": "2f0df87b63fb752a0e917a1ebc4ccb6d3eb6a19516d96332de781fbe74345fb9",
+      "acceptance_criteria": [
+        "AC-UI-002.1",
+        "AC-UI-002.2",
+        "AC-UI-002.3"
+      ],
+      "verified_criteria": [
+        "AC-UI-002.1",
+        "AC-UI-002.2",
+        "AC-UI-002.3"
+      ],
+      "implementation_files": [
+        "src/ui/styles/chat.py",
+        "src/ui/styles/dark_theme.py",
+        "src/ui/styles/layout.py",
+        "src/ui/styles/tokens.py",
+        "src/ui/ui_theme.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "UI-003",
+      "title": "Header Navigation Bar and Brand Typography",
+      "spec_file": "specs/ui/theme_and_cards.md",
+      "is_planned": false,
+      "sha256": "3c119a084bfbe1e7912bbb54775b5339e04941dd8a681845a3c56497a2a0c5ba",
+      "verified_sha256": "3c119a084bfbe1e7912bbb54775b5339e04941dd8a681845a3c56497a2a0c5ba",
+      "acceptance_criteria": [
+        "AC-UI-003.1",
+        "AC-UI-003.2"
+      ],
+      "verified_criteria": [
+        "AC-UI-003.1",
+        "AC-UI-003.2"
+      ],
+      "implementation_files": [
+        "src/ui/styles/layout.py",
+        "src/ui/styles/tokens.py",
+        "src/ui/ui_theme.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "UI-004",
+      "title": "Early Theme Injection and Client-Side Theme Switching",
+      "spec_file": "specs/ui/theme_and_cards.md",
+      "is_planned": false,
+      "sha256": "e852074a25557db8e190d563a4025ff28744e82fba2ba590ff7b5cd7d39005b1",
+      "verified_sha256": "e852074a25557db8e190d563a4025ff28744e82fba2ba590ff7b5cd7d39005b1",
+      "acceptance_criteria": [
+        "AC-UI-004.1",
+        "AC-UI-004.2",
+        "AC-UI-004.3"
+      ],
+      "verified_criteria": [
+        "AC-UI-004.1",
+        "AC-UI-004.2",
+        "AC-UI-004.3"
+      ],
+      "implementation_files": [
+        "src/chatbot.py",
+        "src/ui/client_scripts.py",
+        "src/ui/gradio_app.py",
+        "src/ui/ui_theme.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "UI-005",
+      "title": "Event Cards, Interactive Quiz Pills and Gradio Layout",
+      "spec_file": "specs/ui/theme_and_cards.md",
+      "is_planned": false,
+      "sha256": "8b84b6d96d1f23c683f93939b10f555eb9320ac0adeead67812cb0fb806f200b",
+      "verified_sha256": "8b84b6d96d1f23c683f93939b10f555eb9320ac0adeead67812cb0fb806f200b",
+      "acceptance_criteria": [
+        "AC-UI-005.1",
+        "AC-UI-005.2",
+        "AC-UI-005.3"
+      ],
+      "verified_criteria": [
+        "AC-UI-005.1",
+        "AC-UI-005.2",
+        "AC-UI-005.3"
+      ],
+      "implementation_files": [
+        "src/chatbot.py",
+        "src/core/quiz_engine.py",
+        "src/ui/client_scripts.py",
+        "src/ui/event_cards.py",
+        "src/ui/gradio_app.py",
+        "src/ui/styles/chat.py",
+        "src/ui/ui_theme.py"
+      ],
+      "status": "VERIFIED"
+    }
+  ]
+}

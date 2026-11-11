@@ -1,0 +1,60 @@
+[project]
+name = "case-room"
+version = "0.5.0"
+description = "Case-Room (Jarvis) — Interactive Business Case Companion"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "dotenv>=0.9.9",
+    "fpdf2>=2.8.7",
+    "google-genai>=2.6.0",
+    "gradio>=6.15.0",
+    "ipywidgets>=8.1.8",
+    "markdown>=3.11",
+    "matplotlib>=3.10.0",
+    "openai>=2.38.0",
+    "pillow>=12.2.0",
+    "pypdf>=6.12.2",
+    "pytest>=9.1.1",
+    "qrcode>=8.2",
+    "reportlab>=5.0.1",
+    "requests>=2.34.2",
+    "scrubadub>=2.0.0",
+    "sentence-transformers>=3.0.0",
+    "weasyprint>=70.0",
+]
+
+[tool.ruff]
+target-version = "0.5.0"
+line-length = 120
+indent-width = 4
+exclude = [
+    "test.ipynb",
+    "generate_deck.py",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes (unused imports, undefined variables)
+    "I",    # isort (clean, organized imports)
+    "UP",   # pyupgrade (modern Python syntax)
+    "SIM",  # flake8-simplify
+]
+ignore = [
+    "E501", # line length handled by formatter
+    "SIM102", # nested if statements (often cleaner in conversational state logic)
+    "E402", # module level import not at top (needed for sys.path manipulation in scripts/tools)
+    "W291", # trailing whitespace in multi-line markdown strings
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "src/core", "src/tools", "src/analytics_engine"]
+
+
