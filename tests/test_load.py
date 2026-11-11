@@ -39,15 +39,17 @@ def setup_context_cache():
     yield cache
 
 
+DEFAULT_CASE = get_default_case_study()
+
 # Diverse question scenarios covering QA, Quiz mode, Greetings, Graphs, and Adversarial Edge Cases
 QUESTION_SCENARIOS = [
     {
-        "initial": "What are EcoBrew's Scope 1, 2, and 3 carbon footprint percentages? Show me a graph.",
+        "initial": f"What are {DEFAULT_CASE}'s Scope 1, 2, and 3 carbon footprint percentages? Show me a graph.",
         "followup": "Which scope has the highest emission and what strategy targets it?",
         "expects_graph": True,
     },
     {
-        "initial": "Did EcoBrew meet its 2025 Water Stewardship targets?",
+        "initial": f"Did {DEFAULT_CASE} meet its 2025 Water Stewardship targets?",
         "followup": "Can you plot a graph of their water use efficiency performance over time?",
         "expects_graph": False,
         "followup_expects_graph": True,
@@ -59,12 +61,12 @@ QUESTION_SCENARIOS = [
     },
     {
         "initial": "k",
-        "followup": "EcoBrew achieved 2.38 hl/hl water efficiency outperforming the 2.5 target.",
+        "followup": f"{DEFAULT_CASE} achieved 2.38 hl/hl water efficiency outperforming the 2.5 target.",
         "expects_graph": False,
     },
     {
-        "initial": "What is CircularGrain and how does EcoVentures upcycle spent grains?",
-        "followup": "How does CircularGrain contribute to circular packaging or sustainability goals?",
+        "initial": f"How does {DEFAULT_CASE} upcycle spent grains?",
+        "followup": "How does upcycling spent grains contribute to circular packaging or sustainability goals?",
         "expects_graph": False,
     },
     {
@@ -73,13 +75,13 @@ QUESTION_SCENARIOS = [
         "expects_graph": True,
     },
     {
-        "initial": "How does EcoBrew manage glass return rates and packaging recycling?",
+        "initial": f"How does {DEFAULT_CASE} manage glass return rates and packaging recycling?",
         "followup": "Compare their circular packaging target to carbon emissions.",
         "expects_graph": False,
     },
     {
         "initial": "Who won the FIFA World Cup in 2022?",
-        "followup": "Can you tell me about EcoBrew's revenue instead?",
+        "followup": f"Can you tell me about {DEFAULT_CASE}'s revenue instead?",
         "expects_graph": False,
     },
     # Adversarial Edge Cases
@@ -89,29 +91,29 @@ QUESTION_SCENARIOS = [
         "expects_graph": False,
     },
     {
-        "initial": "I know for a fact that Scope 2 emissions account for 90% of total emissions at EcoBrew, correct?",
+        "initial": f"I know for a fact that Scope 2 emissions account for 90% of total emissions at {DEFAULT_CASE}, correct?",
         "followup": "Explain why packaging accounts for the majority of Scope 3.",
         "expects_graph": False,
     },
     {
         "initial": "🍺 🌍 📊 ❓",
-        "followup": "What are the 2025 sustainability goals for EcoBrew?",
+        "followup": f"What are the 2025 sustainability goals for {DEFAULT_CASE}?",
         "expects_graph": False,
     },
     {
-        "initial": "As an MBA student doing an exhaustive deep-dive evaluation into corporate governance, enterprise risk management, ESG disclosures, and multi-stakeholder capitalism, could you please synthesize in exhaustive academic detail the complete strategic alignment between EcoBrew's 100+ Accelerator innovation funnel, its venture capital vehicle EcoVentures, its agricultural raw material sourcing strategies across global barley farmers, and its downstream post-consumer circular packaging targets?",
+        "initial": f"As an MBA student doing an exhaustive deep-dive evaluation into corporate governance, enterprise risk management, ESG disclosures, and multi-stakeholder capitalism, could you please synthesize in exhaustive academic detail the complete strategic alignment between {DEFAULT_CASE}'s 100+ Accelerator innovation funnel, its venture capital vehicles, its agricultural raw material sourcing strategies across global barley farmers, and its downstream post-consumer circular packaging targets?",
         "followup": "What is the return rate for glass bottles?",
         "expects_graph": False,
     },
     # Debate-focused strategic assertions
     {
-        "initial": "EcoBrew's ESG goals are just corporate greenwashing since 85% of emissions are in Scope 3 outside their operational control.",
+        "initial": f"{DEFAULT_CASE}'s ESG goals are just corporate greenwashing since 85% of emissions are in Scope 3 outside their operational control.",
         "followup": "How can they realistically claim carbon neutrality by 2040 without destroying operating margins?",
         "expects_graph": False,
     },
     {
-        "initial": "Acquiring craft breweries under EcoVentures dilutes authentic brand equity and alienates core beer consumers.",
-        "followup": "Doesn't aggressive centralized cost-cutting destroy the innovation culture of acquired startups like Goose Island?",
+        "initial": "Acquiring craft breweries under venture capital vehicles dilutes authentic brand equity and alienates core beer consumers.",
+        "followup": "Doesn't aggressive centralized cost-cutting destroy the innovation culture of acquired startups?",
         "expects_graph": False,
     },
 ]

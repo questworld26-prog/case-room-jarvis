@@ -155,8 +155,8 @@ wheels = [
 ]
 
 [[package]]
-name = "case-room-private"
-version = "9.0.0"
+name = "case-room"
+version = "0.5.0"
 source = { virtual = "." }
 dependencies = [
     { name = "dotenv" },
