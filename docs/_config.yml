@@ -13,6 +13,10 @@ search:
   heading_level: 3
   previews: 3
 
+# Mermaid diagram rendering
+mermaid:
+  version: "10.9.1"
+
 # Heading anchors
 heading_anchors: true
 
@@ -30,3 +34,4 @@ plugins:
   - jekyll-remote-theme
   - jekyll-seo-tag
   - jekyll-sitemap
+
