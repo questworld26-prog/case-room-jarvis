@@ -12,8 +12,8 @@ Case-Room includes standalone, interactive HTML diagrams authored with [Archify]
 
 | Diagram | Format | Description |
 | :--- | :--- | :--- |
-| 🏛️ **[System Architecture](architecture.html)** | Standalone HTML | Interactive component topology mapping student mobile ingress, Gradio TLS tunneling, dialogue guardrails, microkernel plugins, context cache management, and Google Gemini API integration. Supports dark/light themes, live connection tracing, and SVG export. |
-| 🧪 **[Testing & SDD Pipeline](testing.html)** | Standalone HTML | Interactive workflow diagram illustrating the 5-Level Testing Pyramid, dual-layer golden dataset grader, Ollama user simulator, and the Spec Guardian audit loop. |
+| 🏛️ **[System Architecture](https://questworld26-prog.github.io/case-room-jarvis/developer/architecture.html)** | Standalone HTML | Interactive component topology mapping student mobile ingress, Gradio TLS tunneling, dialogue guardrails, microkernel plugins, context cache management, and Google Gemini API integration. Supports dark/light themes, live connection tracing, and SVG export. |
+| 🧪 **[Testing & SDD Pipeline](https://questworld26-prog.github.io/case-room-jarvis/developer/testing.html)** | Standalone HTML | Interactive workflow diagram illustrating the 5-Level Testing Pyramid, dual-layer golden dataset grader, Ollama user simulator, and the Spec Guardian audit loop. |
 
 > [!TIP]
 > **Semantic Passport & IDE Jumping**: Clicking any component or node in either interactive HTML diagram opens its **Semantic Passport** panel with source links and direct IDE jumping (`⚡ Open in IDE`).

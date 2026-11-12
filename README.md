@@ -104,7 +104,7 @@ Chat logs are stored **only on your laptop** in the `logs/` folder. They are nev
 Case-Room is a Python 3.13 + [Gradio](https://www.gradio.app/) app that uses the [Google GenAI SDK](https://github.com/googleapis/python-genai).
 
 - 📖 **[Developer & Architecture Guide](docs/developer/README.md)**: Deep dive into the system design, microkernel plugin protocol, Spec-Driven Development (SDD) workflow, and the 5-Level Testing Pyramid.
-- 🏛️ **[Interactive Architecture Diagram](docs/developer/architecture.html)** & 🧪 **[Testing Pipeline Diagram](docs/developer/testing.html)**: Standalone explorable HTML diagrams with Semantic Passport and IDE jumping.
+- 🏛️ **[Interactive Architecture Diagram](https://questworld26-prog.github.io/case-room-jarvis/developer/architecture.html)** & 🧪 **[Testing Pipeline Diagram](https://questworld26-prog.github.io/case-room-jarvis/developer/testing.html)**: Standalone explorable HTML diagrams hosted on GitHub Pages with Semantic Passport and IDE jumping.
 - 📐 **[Architecture Decision Records (ADR.md)](docs/developer/ADR.md)**: Formal records of design decisions and trade-offs.
 - 📋 **[Release Notes & History (release.md)](docs/developer/release.md)**: Canonical release history, changelogs, and version milestones (v0.5.0–v0.8.0).
 
