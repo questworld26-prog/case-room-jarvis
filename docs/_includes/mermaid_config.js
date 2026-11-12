@@ -1,0 +1,30 @@
+{
+  theme: "dark",
+  themeVariables: {
+    primaryColor: "#1f6feb",
+    primaryTextColor: "#f0f6fc",
+    primaryBorderColor: "#388bfd",
+    lineColor: "#58a6ff",
+    secondaryColor: "#238636",
+    tertiaryColor: "#161b22",
+    background: "#0d1117",
+    mainBkg: "#161b22",
+    nodeBorder: "#30363d",
+    actorBkg: "#161b22",
+    actorBorder: "#58a6ff",
+    actorTextColor: "#f0f6fc",
+    actorLineColor: "#58a6ff",
+    signalColor: "#f0f6fc",
+    signalTextColor: "#f0f6fc",
+    labelBoxBkgColor: "#161b22",
+    labelBoxBorderColor: "#388bfd",
+    labelTextColor: "#f0f6fc",
+    loopTextColor: "#f0f6fc",
+    noteBorderColor: "#d29922",
+    noteBkgColor: "#272115",
+    noteTextColor: "#f0f6fc",
+    activationBorderColor: "#388bfd",
+    activationBkgColor: "#1f6feb",
+    sequenceNumberColor: "#0d1117"
+  }
+}

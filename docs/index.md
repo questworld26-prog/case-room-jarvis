@@ -37,3 +37,4 @@ Explore the system topologies directly in your browser:
 ## 🛡️ Privacy & Compliance
 
 Chat logs are stored **strictly locally on the instructor's laptop** in the `logs/` directory. Student identifiers (emails, phone numbers, student IDs) are automatically masked before writing to telemetry. No student conversation data is persisted to public cloud storage or shared across classes.
+
