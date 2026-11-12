@@ -43,7 +43,7 @@ If you are comfortable with a terminal:
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # 2. Get the code and install dependencies
-git clone https://github.com/<your-org>/case-room.git
+git clone https://github.com/case-room/case-room.git
 cd case-room
 uv sync
 

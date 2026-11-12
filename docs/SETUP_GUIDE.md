@@ -86,7 +86,7 @@ Pick **one** of these options.
 **Option B: Use git** (if you already have it)
 ```bash
 cd ~/Documents
-git clone https://github.com/<your-org>/case-room.git
+git clone https://github.com/case-room/case-room.git
 ```
 
 Now point the terminal at that folder. Type `cd ` (with a space after it), **drag the `case-room` folder from Finder or File Explorer into the terminal window**, and press Enter. The folder's path fills in for you.
@@ -146,7 +146,7 @@ ADMIN_PASSWORD=pick-a-strong-password
 
 > [!NOTE]
 > **Mac users:** Finder hides files whose names start with a dot, such as `.env`. Press `Cmd + Shift + .` in Finder to show them.
-> 
+>
 > **TextEdit Tip:** Do not wrap your API key or password in quotation marks (`"..."`). Apple TextEdit can convert straight quotes into curly quotes (`“...”`), which breaks the key.
 
 ---
