@@ -33,6 +33,7 @@ jobs:
 
       - name: Run Core Test Suite
         env:
-          GEMINI_API_KEY: "dummy-api-key-for-ci"
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
         run: |
           uv run pytest tests/test_chatbot.py tests/test_ui_theme.py tests/test_quiz_parser.py tests/test_chat_guardrails.py -v
+

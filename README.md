@@ -1,7 +1,7 @@
 # Case-Room — an AI case study companion for your classroom
 
 [![CI](https://github.com/questworld26-prog/case-room-jarvis/actions/workflows/ci.yml/badge.svg)](https://github.com/questworld26-prog/case-room-jarvis/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/questworld26-prog/case-room-jarvis?color=green)](https://github.com/questworld26-prog/case-room-jarvis/releases)
+[![Release](https://img.shields.io/github/v/tag/questworld26-prog/case-room-jarvis?color=green&label=release)](https://github.com/questworld26-prog/case-room-jarvis/releases)
 [![Python](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 

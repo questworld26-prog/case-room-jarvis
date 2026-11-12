@@ -21,10 +21,16 @@ import asyncio
 import time
 
 import pytest
-from cache_manager import get_or_create_cache
+from core.cache_manager import get_or_create_cache, validate_gemini_api_key
 
 from chatbot import chat
 from config import app_state, get_default_case_study
+
+_has_gemini, _gemini_reason = validate_gemini_api_key()
+requires_live_gemini = pytest.mark.skipif(
+    not _has_gemini,
+    reason=f"Requires live Gemini API: {_gemini_reason}",
+)
 
 
 @pytest.fixture(scope="module")
@@ -50,6 +56,7 @@ def collect_stream(question, history, student_name="Test Student"):
 
 
 # [verifies: MODE-001/AC-MODE-001.1]
+@requires_live_gemini
 def test_ground_truth_answering(setup_context_cache):
     """Verify Jarvis answers factual metrics directly supported by the case documents."""
     app_state.active_mode = "qa"
@@ -66,6 +73,7 @@ def test_ground_truth_answering(setup_context_cache):
 
 
 # [verifies: CHAT-003/AC-CHAT-003.3]
+@requires_live_gemini
 def test_multiturn_history_resilience(setup_context_cache):
     """Verify multi-turn chat works cleanly when history contains Gradio 6 list-dict structures."""
     app_state.active_mode = "qa"
@@ -92,6 +100,7 @@ def test_multiturn_history_resilience(setup_context_cache):
 
 
 # [verifies: MODE-001/AC-MODE-001.2]
+@requires_live_gemini
 def test_multi_question_redirect(setup_context_cache):
     """Verify Jarvis picks the most important question, notes conciseness limits, and requests 1 question at a time."""
     app_state.active_mode = "qa"
@@ -122,6 +131,7 @@ def test_multi_question_redirect(setup_context_cache):
 
 
 # [verifies: CHAT-004/AC-CHAT-004.1]
+@requires_live_gemini
 def test_out_of_scope_rejection(setup_context_cache):
     """Verify Jarvis declines to answer irrelevant world-knowledge questions."""
     app_state.active_mode = "qa"
@@ -314,6 +324,7 @@ def test_cache_restart_recovery(setup_context_cache):
 
 
 # [verifies: CHAT-004/AC-CHAT-004.3]
+@requires_live_gemini
 def test_graph_generation_fallback(setup_context_cache):
     """Verify chatbot automatically appends the Matplotlib static image when asked for a graph and file exists on disk."""
     import os
