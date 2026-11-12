@@ -21,9 +21,12 @@ Inside the `case-room/resource/` folder, create a new folder named after your ca
 ```text
 case-room/
 └── resource/
-    ├── EcoBrew/          ← sample case (already there)
+    ├── EcoBrew/          ← sample case (already there; fictional demonstration case)
     └── TeslaPricing/     ← your new case
 ```
+
+> [!NOTE]
+> **EcoBrew** is a synthetic, fictional business case provided as a working reference. Real course cases (from Harvard Business Publishing, Ivey, INSEAD, etc.) should be added in separate folders following Steps 1–4.
 
 The folder name is exactly what you'll see in the admin panel, and it's also what links your quiz to this case (Step 4).
 

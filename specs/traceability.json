@@ -1,5 +1,5 @@
 {
-  "last_audited_at": "2026-11-12T03:56:19.729100+00:00",
+  "last_audited_at": "2026-11-12T04:36:56.926141+00:00",
   "total_requirements": 21,
   "total_criteria": 70,
   "verified_criteria_count": 70,
@@ -23,8 +23,8 @@
       "title": "Classroom Telemetry Analytics and PDF Report Generation",
       "spec_file": "specs/analytics/reporting.md",
       "is_planned": false,
-      "sha256": "7b48a3c9a831a18911f607c7f7680dfb179c5f5c6bb4f2985e9aeb621209144e",
-      "verified_sha256": "7b48a3c9a831a18911f607c7f7680dfb179c5f5c6bb4f2985e9aeb621209144e",
+      "sha256": "39a1019ce73af09d5c1c88b43424b90f8a2a3862fee120fce1c43738d23ae215",
+      "verified_sha256": "39a1019ce73af09d5c1c88b43424b90f8a2a3862fee120fce1c43738d23ae215",
       "acceptance_criteria": [
         "AC-ANLY-001.1",
         "AC-ANLY-001.2",
@@ -53,8 +53,8 @@
       "title": "Dynamic Case Discovery and Preprocessing Pipeline",
       "spec_file": "specs/core/case_cache_config.md",
       "is_planned": false,
-      "sha256": "254841d0ad0f1fa8765d1cc8dc4701c2c2806a20416f21c48791ba7d297de23a",
-      "verified_sha256": "254841d0ad0f1fa8765d1cc8dc4701c2c2806a20416f21c48791ba7d297de23a",
+      "sha256": "f7d9b0e6adbc0c371baef40c8b02bb3209be3ce8ac70620a13599e258c7ac135",
+      "verified_sha256": "f7d9b0e6adbc0c371baef40c8b02bb3209be3ce8ac70620a13599e258c7ac135",
       "acceptance_criteria": [
         "AC-CACHE-001.1",
         "AC-CACHE-001.2"
@@ -75,8 +75,8 @@
       "title": "Context Cache Lifecycle and Recovery",
       "spec_file": "specs/core/case_cache_config.md",
       "is_planned": false,
-      "sha256": "64e35bc3f8c25abbfc3dfea5ea82f9d8f7341771b71e8b4c53c118c850876b82",
-      "verified_sha256": "64e35bc3f8c25abbfc3dfea5ea82f9d8f7341771b71e8b4c53c118c850876b82",
+      "sha256": "8fe5594a625dcd5d711c3cc424862f862e133c7a2114bb8b6c4b6c6049d3e77e",
+      "verified_sha256": "8fe5594a625dcd5d711c3cc424862f862e133c7a2114bb8b6c4b6c6049d3e77e",
       "acceptance_criteria": [
         "AC-CACHE-002.1",
         "AC-CACHE-002.2"
@@ -254,8 +254,8 @@
       "title": "Multiple-Choice Parsing and Brand Casing Normalization",
       "spec_file": "specs/core/quiz_pedagogy.md",
       "is_planned": false,
-      "sha256": "94de4ae57dcf0dbce26aacdfc0135422fbc953477bf4f337251f6a98f35f54d6",
-      "verified_sha256": "94de4ae57dcf0dbce26aacdfc0135422fbc953477bf4f337251f6a98f35f54d6",
+      "sha256": "16125f6a691e8cb26ba03b8ab777bca2663527503e6a970904b1744611cc0a66",
+      "verified_sha256": "16125f6a691e8cb26ba03b8ab777bca2663527503e6a970904b1744611cc0a66",
       "acceptance_criteria": [
         "AC-QUIZ-001.1",
         "AC-QUIZ-001.2"
@@ -278,8 +278,8 @@
       "title": "Two-Attempt Quiz Scoring and Scorecard Generation",
       "spec_file": "specs/core/quiz_pedagogy.md",
       "is_planned": false,
-      "sha256": "9342c9b62787c11b0821b2f60152a1f80e2a5d3b192dc02c695cfd64c3fa2f63",
-      "verified_sha256": "9342c9b62787c11b0821b2f60152a1f80e2a5d3b192dc02c695cfd64c3fa2f63",
+      "sha256": "e236d9725f288fff41693eb8ab39f1e8dae3137b05eedab1f197db119f408ff5",
+      "verified_sha256": "e236d9725f288fff41693eb8ab39f1e8dae3137b05eedab1f197db119f408ff5",
       "acceptance_criteria": [
         "AC-QUIZ-002.1",
         "AC-QUIZ-002.2",
@@ -356,8 +356,8 @@
       "title": "Telemetry Log Sanitization and Environment Isolation",
       "spec_file": "specs/core/telemetry_privacy.md",
       "is_planned": false,
-      "sha256": "53967824dad275efbc4da2e27089131a76a5aea946458c98ae32899a942c8706",
-      "verified_sha256": "53967824dad275efbc4da2e27089131a76a5aea946458c98ae32899a942c8706",
+      "sha256": "281782a08b836660bcc8c21b08aa2a6d97726e4e70162a04f0398d519d53716f",
+      "verified_sha256": "281782a08b836660bcc8c21b08aa2a6d97726e4e70162a04f0398d519d53716f",
       "acceptance_criteria": [
         "AC-PRIV-002.1",
         "AC-PRIV-002.2",
@@ -379,8 +379,8 @@
       "title": "Golden Benchmark Evaluation and Hallucination Guardrails",
       "spec_file": "specs/eval/evaluation_tools.md",
       "is_planned": false,
-      "sha256": "53b67bc2a47cde98a952b139cbba0b726a4cef62f747eb77056e8efe232d303a",
-      "verified_sha256": "53b67bc2a47cde98a952b139cbba0b726a4cef62f747eb77056e8efe232d303a",
+      "sha256": "f2182dba83f2e1d991ebbdea184eaf54d4339f8c8356bb63294f48ba5281e0ef",
+      "verified_sha256": "f2182dba83f2e1d991ebbdea184eaf54d4339f8c8356bb63294f48ba5281e0ef",
       "acceptance_criteria": [
         "AC-EVAL-001.1",
         "AC-EVAL-001.2",
@@ -404,8 +404,8 @@
       "title": "Instructor Mode Staging, Broadcast and Runtime Configuration",
       "spec_file": "specs/ui/instructor_admin.md",
       "is_planned": false,
-      "sha256": "8e18ee44e972f77f63ebee6e76e2b68dc5f5267fee8d60f050d9cdc1943729c3",
-      "verified_sha256": "8e18ee44e972f77f63ebee6e76e2b68dc5f5267fee8d60f050d9cdc1943729c3",
+      "sha256": "079cc280b55377673ce3116097d0d17b23e01047792d999b223c89b2c1a78a40",
+      "verified_sha256": "079cc280b55377673ce3116097d0d17b23e01047792d999b223c89b2c1a78a40",
       "acceptance_criteria": [
         "AC-ADMIN-001.1",
         "AC-ADMIN-001.2",
@@ -511,8 +511,8 @@
       "title": "Early Theme Injection and Client-Side Theme Switching",
       "spec_file": "specs/ui/theme_and_cards.md",
       "is_planned": false,
-      "sha256": "e852074a25557db8e190d563a4025ff28744e82fba2ba590ff7b5cd7d39005b1",
-      "verified_sha256": "e852074a25557db8e190d563a4025ff28744e82fba2ba590ff7b5cd7d39005b1",
+      "sha256": "0bdbb134f8de50e428fc27558e5798a0f49f87a7827a4be64fd6e90e338a83da",
+      "verified_sha256": "0bdbb134f8de50e428fc27558e5798a0f49f87a7827a4be64fd6e90e338a83da",
       "acceptance_criteria": [
         "AC-UI-004.1",
         "AC-UI-004.2",

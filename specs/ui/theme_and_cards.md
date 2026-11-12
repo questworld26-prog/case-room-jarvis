@@ -33,7 +33,7 @@ The client script module shall execute synchronous theme detection in the docume
 
 Acceptance Criteria:
 - AC-UI-004.1: When the page document head loads, `HEAD_THEME_SCRIPT` shall synchronously inspect URL parameters, localStorage, and system color-scheme preferences to apply dark mode classes before first paint.
-- AC-UI-004.2: The client hero script shall define `applyGeminiTheme`, `toggleGeminiTheme`, and `initGeminiTheme` functions that synchronize theme classes across all `.gradio-container` instances.
+- AC-UI-004.2: The client hero script shall expose theme application, toggling, and initialization controls that synchronize theme classes across all `.gradio-container` instances.
 - AC-UI-004.3: The navigation bar HTML shall render the `#gemini-theme-toggle` button with an `aria-label` attribute and SVG sun and moon icons instead of an emoji icon.
 
 ## UI-005: Event Cards, Interactive Quiz Pills and Gradio Layout

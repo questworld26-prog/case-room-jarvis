@@ -11,8 +11,8 @@ Usage:
 """
 
 import argparse
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Ensure src/ is on sys.path for direct module execution
 src_path = Path(__file__).resolve().parent.parent
@@ -103,7 +103,6 @@ def main() -> int:
     print(f"Scanning {len(case_dirs)} case study folder(s) in {res_dir}...\n")
 
     all_passed = True
-    any_found = False
 
     for c_dir in case_dirs:
         passed, report = validate_case_quiz(c_dir)
@@ -113,11 +112,8 @@ def main() -> int:
         if "⚠️ No quiz.md found" in report:
             if args.strict:
                 all_passed = False
-        elif passed:
-            any_found = True
-        else:
+        elif not passed:
             all_passed = False
-            any_found = True
 
     if all_passed:
         print("\n🎉 Pre-flight quiz validation PASSED! All verified quiz banks are ready for class.\n")

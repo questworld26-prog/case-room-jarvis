@@ -87,10 +87,13 @@ A dark summary card at the top that shows the current state at a glance:
 
 ### 3.2 📚 Business Case Study Selection
 
-- **Available Case Studies**: one option for each folder inside `resource/`. To add your own, see **[Adding Your Own Case Study](ADDING_A_CASE_STUDY.md)**.
+- **Available Case Studies**: one option for each folder inside `resource/` (including the built-in synthetic demonstration case, **EcoBrew**). To add your own, see **[Adding Your Own Case Study](ADDING_A_CASE_STUDY.md)**.
 - **🚀 Load Selected Case Study**: loads the case into Jarvis. **Until you click this, students see *"⚠️ No Case Study Selected"*.**
 - A confirmation like *"✅ Active Case Study set to: EcoBrew (Loaded 21,226 chars…)"* appears when it worked.
 - If the case doesn't have its own quiz yet, you'll see a warning that Quiz mode will use AI-generated questions. See [writing a quiz bank](ADDING_A_CASE_STUDY.md#step-4-optional-write-a-quiz-for-the-case).
+
+> [!NOTE]
+> **EcoBrew** is a completely fictional case study included to verify your setup and test classroom dynamics before uploading course materials.
 
 ### 3.3 📊 Live Class Dashboard
 

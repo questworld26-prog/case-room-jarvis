@@ -3,15 +3,14 @@ Unit tests for Case Study Markdown Quiz Bank Parsing, Validation, and Admin Insp
 [spec: QUIZ-003]
 """
 
-from pathlib import Path
 import tempfile
-import pytest
+from pathlib import Path
 
 from core.quiz_parser import (
+    get_quiz_validation_status,
     load_case_quiz_bank,
     parse_quiz_markdown,
     validate_quiz_file,
-    get_quiz_validation_status,
 )
 
 

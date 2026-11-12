@@ -6,10 +6,10 @@ Verifies MCQ parsing, 2-attempt rule, hints, official answer reveals, open-ended
 import asyncio
 
 import pytest
+from conftest import is_private_repo
 
 from chatbot import chat, parse_mcq_choice
 from config import app_state, get_default_case_study
-from conftest import is_private_repo
 
 
 @pytest.fixture(autouse=True)

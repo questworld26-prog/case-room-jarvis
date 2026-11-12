@@ -7,11 +7,11 @@ from pathlib import Path
 
 from analytics import compute_metrics, get_available_log_files
 from cache_manager import get_or_create_cache
+from conftest import is_private_repo
 from logger import log_interaction
 from preprocess_case import preprocess_case_folder
 
 from config import app_state, get_available_case_studies
-from conftest import is_private_repo
 
 
 # [verifies: CACHE-001/AC-CACHE-001.1]

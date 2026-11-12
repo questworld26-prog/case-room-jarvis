@@ -1,3 +1,17 @@
+# Copyright 2026 Sukti Ghosh and Prithis Samaddar
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 """
 Gradio Blocks application layout and interactive component wiring for Jarvis Chatbot.
 Separates UI component assembly from the core streaming chat engine.
@@ -8,7 +22,7 @@ from pathlib import Path
 
 import gradio as gr
 
-from config import PRE_AUTHORED_QUIZ_BANKS, app_state, get_available_case_studies
+from config import app_state, get_available_case_studies
 from core.cache_manager import get_or_create_cache
 from core.quiz_parser import get_quiz_validation_status
 from ui.admin_handlers import (
@@ -378,7 +392,7 @@ def _build_admin_tab() -> gr.Image:
             admin_summary_banner = gr.Markdown(value=get_admin_status())
             gr.Markdown("## 📚 Business Case Study Selection")
             gr.Markdown(
-                "Select the business case study folder to use for this classroom session. Text context will be loaded on demand."
+                "Select the business case study folder to use for this classroom session. Text context will be loaded on demand. *(Note: **EcoBrew** is a built-in fictional demonstration case)*."
             )
             with gr.Row():
                 case_study_radio = gr.Radio(

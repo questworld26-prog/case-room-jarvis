@@ -1,4 +1,5 @@
 # Supplementary Curated Exhibits: EcoBrew Case Study
+# [NOTE: EcoBrew is a fictitious, synthetic company. All data and metrics below are simulated for demonstration.]
 
 ## Exhibit 1: EcoBrew 2025 Sustainability Target Scorecard
 | Sustainability Pillar | 2025 Metric Target | 2025 Actual Outcome | Status |

@@ -12,10 +12,10 @@ import asyncio
 
 import pytest
 from cache_manager import get_or_create_cache
+from conftest import is_private_repo
 from eval_golden_dataset import load_golden_dataset, run_single_golden_test
 
 from config import app_state, get_default_case_study
-from conftest import is_private_repo
 
 
 @pytest.fixture(scope="module")

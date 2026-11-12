@@ -7,8 +7,8 @@ and admin card preview generation for case study quiz banks.
 """
 
 import logging
-from pathlib import Path
 import re
+from pathlib import Path
 
 logger = logging.getLogger("case_room.quiz_parser")
 
@@ -258,10 +258,7 @@ def load_case_quiz_bank(case_dir_or_name: Path | str) -> list[dict]:
     Load and parse the quiz bank for a case study from its markdown file (quiz.md).
     Returns a list of structured question dicts, or [] if missing or invalid.
     """
-    if isinstance(case_dir_or_name, Path):
-        case_dir = case_dir_or_name
-    else:
-        case_dir = get_case_resource_dir(str(case_dir_or_name))
+    case_dir = case_dir_or_name if isinstance(case_dir_or_name, Path) else get_case_resource_dir(str(case_dir_or_name))
 
     quiz_file = case_dir / "quiz.md"
     if not quiz_file.is_file():

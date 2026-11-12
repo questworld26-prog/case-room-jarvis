@@ -471,7 +471,7 @@ Restructure the project into a standard **`src/` layout with domain packages** a
    - **Application Entrypoints**: `chatbot.py`, `analytics_app.py`, `config.py`, and `main.py` live under `src/`.
 
 2. **`docs/` Directory Consolidation**:
-   - Consolidate non-readme operational documentation (`ADR.md`, `CLASSROOM_FLOW.md`, `TroubleShooting.md`, `eval_scorecard.md`) into `docs/` and version history into `RELEASE.md`.
+   - Consolidate non-readme operational documentation (`ADR.md`, `CLASSROOM_FLOW.md`, `TroubleShooting.md`, `eval_scorecard.md`) into `docs/` and version history into `docs/developer/release.md`.
 
 3. **Deterministic Path Resolution & Test Discovery**:
    - Anchor all filesystem paths to repo root via `Path(__file__).resolve().parent...` so moving packages does not break asset access (`resource/`, `logs/`, `data/`).

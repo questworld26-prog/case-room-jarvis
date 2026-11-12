@@ -20,11 +20,12 @@ Case-Room includes standalone, interactive HTML diagrams authored with [Archify]
 
 ---
 
-## 📚 Architectural Records (ADRs)
+## 📚 Architectural Records & Release History
 
-Key architectural decisions, trade-offs, and historical context are formally documented in:
+Key architectural decisions, trade-offs, and version release notes are formally documented in:
 
 - **[Architecture Decision Records (ADR.md)](ADR.md)**: 16 approved ADRs covering context caching (ADR 002), restart recovery (ADR 003), staged mode broadcasting (ADR 014), microkernel plugins (ADR 016), and tiered evaluation (ADR 011).
+- **[Release Notes & History (release.md)](release.md)**: The single canonical release log detailing version milestones, migrations, and quality gates from v0.5.0 to v0.8.0.
 
 ---
 
@@ -49,7 +50,10 @@ Case-Room enforces a strict **Spec-First** development methodology aligned with 
 
 ## 🧪 The 5-Level Testing Pyramid
 
-Our testing strategy guarantees speed, privacy, pedagogical accuracy, and concurrency resilience:
+Our testing strategy guarantees speed, privacy, pedagogical accuracy, and concurrency resilience using the bundled synthetic **EcoBrew** reference case (`resource/EcoBrew/`):
+
+> [!NOTE]
+> **Synthetic Test Fixtures**: **EcoBrew** is an entirely fictional, synthetic corporate case study created to enable hermetic, automated testing across all five pyramid levels without relying on proprietary courseware.
 
 ```text
                ▲
@@ -123,6 +127,7 @@ To add a new operating mode to Jarvis:
 2. Implement the `ModePlugin` dataclass defined in `src/core/plugin_protocol.py`:
    ```python
    from core.plugin_protocol import ModePlugin
+
 
    def register_plugins(registry: dict[str, ModePlugin], frameworks: dict[str, str]) -> None:
        registry["socratic"] = ModePlugin(
@@ -201,6 +206,11 @@ case-room/
 │
 └── docs/                              # Project documentation
     ├── developer/                     # Developer guides, ADRs & architecture HTML
+    │   ├── ADR.md                     # Architectural Decision Records
+    │   ├── README.md                  # Developer & architecture guide
+    │   ├── architecture.html          # Interactive system architecture diagram
+    │   ├── release.md                 # Single consolidated release log & version history
+    │   └── testing.html               # Interactive testing pyramid & SDD diagram
     ├── ADDING_A_CASE_STUDY.md         # Case onboarding guide
     ├── SETUP_GUIDE.md                 # End-user setup guide
     ├── TROUBLESHOOTING.md             # Common issues & recovery

@@ -279,7 +279,7 @@ def page4_grounding(pdf, total_turns, hallucination_cnt) -> None:
     pdf.set_text_color(51, 65, 85)
     hal_text = (
         f"A total of {hallucination_cnt} turns ({round((hallucination_cnt / total_turns) * 100, 1)}%) contained factual hallucinations, all isolated to Exhibit 3:\n"
-        "• Root Cause: Exhibit 3 in the HBS Case is an embedded image line chart titled 'Revenue and Income' covering ONLY 2019-2022 without Gross Profit or tabular numbers.\n"
+        "• Root Cause: Exhibit 3 in the synthetic EcoBrew Case is an embedded image line chart titled 'Revenue and Income' covering ONLY 2019-2022 without Gross Profit or tabular numbers.\n"
         "• Chatbot Hallucination: Fabricated a 2017 baseline ($43.6B revenue, $24.7B gross profit) from pre-trained 10-K memory, and misstated 2020 net income ($1.4B) as $4.7B (confusing with 2021).\n"
         "• Resolution: Inject explicit textual table for Exhibit 3 into extracted_context.txt to eliminate visual chart guessing."
     )

@@ -1,5 +1,8 @@
 # EcoBrew Quiz Bank
 
+> [!NOTE]
+> All questions, scenarios, and figures in this quiz bank pertain to the synthetic business case study "EcoBrew", created solely for testing and demonstration.
+
 ## Q1: Scope 3 Carbon Footprint & Packaging Impact
 - **Type**: MCQ
 - **Hint**: Consider where the vast majority of emissions occur across the upstream and downstream value chain, and which physical material container drives the largest carbon share.

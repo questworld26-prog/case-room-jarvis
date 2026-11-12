@@ -16,5 +16,5 @@ The telemetry logger shall scrub personally identifiable information before writ
 Acceptance Criteria:
 - AC-PRIV-002.1: When recording a chat turn to disk, the telemetry logger shall redact student emails, phone numbers, and 8-digit IDs from the logged prompt before writing JSONL.
 - AC-PRIV-002.2: When writing a telemetry entry, the telemetry logger shall record the active `case_study` name alongside the timestamp, mode, and latency fields.
-- AC-PRIV-002.3: While running inside a pytest execution environment, the telemetry logger shall route all interaction records to `logs/test_interactions.jsonl`.
+- AC-PRIV-002.3: While running inside a pytest execution environment, the telemetry logger shall route all interaction records to an isolated test telemetry log file.
 

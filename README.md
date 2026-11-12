@@ -65,6 +65,9 @@ The terminal prints a public link (`https://xxxx.gradio.live`) and saves a QR co
 
 The repository comes with a sample case, **EcoBrew: Sustainability & Global Strategy** (in `resource/EcoBrew/`), and a ready-made 5-question quiz for it. Use it to try the whole workflow before you add your own case.
 
+> [!NOTE]
+> **Fictional Case Study Notice:** **EcoBrew** is an entirely fictional, synthetic company and case study created solely for demonstration, automated testing, and benchmark evaluation. Any resemblance to actual companies, real-world operational/financial data, or living individuals is purely coincidental.
+
 ---
 
 ## Requirements at a glance
@@ -89,6 +92,7 @@ Case-Room is a Python 3.13 + [Gradio](https://www.gradio.app/) app that uses the
 - 📖 **[Developer & Architecture Guide](docs/developer/README.md)**: Deep dive into the system design, microkernel plugin protocol, Spec-Driven Development (SDD) workflow, and the 5-Level Testing Pyramid.
 - 🏛️ **[Interactive Architecture Diagram](docs/developer/architecture.html)** & 🧪 **[Testing Pipeline Diagram](docs/developer/testing.html)**: Standalone explorable HTML diagrams with Semantic Passport and IDE jumping.
 - 📐 **[Architecture Decision Records (ADR.md)](docs/developer/ADR.md)**: Formal records of design decisions and trade-offs.
+- 📋 **[Release Notes & History (release.md)](docs/developer/release.md)**: Canonical release history, changelogs, and version milestones (v0.5.0–v0.8.0).
 
 To run the routine unit tests:
 
@@ -102,6 +106,6 @@ Contributions are welcome. Please open an issue to discuss larger changes first.
 
 ## License & credits
 
-Created by **Sukti Ghosh** and **Prithis Samaddar**. All rights reserved.
+Created by **Sukti Ghosh** and **Prithis Samaddar**.
 
-<!-- TODO: choose a license (e.g. MIT or Apache-2.0), add a LICENSE file, and state it here. -->
+Case-Room is licensed under the **[Apache License 2.0](LICENSE)**. See the **[NOTICE](NOTICE)** file for copyright notices and third-party acknowledgments. The included synthetic EcoBrew demonstration case is also provided under the Apache-2.0 license for testing and onboarding purposes.
