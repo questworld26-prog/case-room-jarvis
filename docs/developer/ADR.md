@@ -1,3 +1,10 @@
+---
+title: "Architecture Decisions (ADR)"
+layout: default
+parent: "Developer Guide"
+nav_order: 1
+---
+
 # Architecture Decision Records (ADR)
 
 This document records the key architectural and design decisions made for the **EcoBrew Business Case Study Chatbot ("Jarvis")**.

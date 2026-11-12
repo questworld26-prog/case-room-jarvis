@@ -1,3 +1,9 @@
+---
+title: "User Guide"
+layout: default
+nav_order: 3
+---
+
 # User Guide
 
 This guide walks through every screen in Case-Room and shows how to run a live class from start to finish. It assumes Case-Room is already installed. If it isn't, start with the **[Setup Guide](SETUP_GUIDE.md)**.

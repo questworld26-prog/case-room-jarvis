@@ -1,3 +1,9 @@
+---
+title: "Troubleshooting"
+layout: default
+nav_order: 6
+---
+
 # Troubleshooting
 
 Find your symptom below. Fixes are written so you can copy and paste them, one step at a time.

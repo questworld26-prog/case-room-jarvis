@@ -1,3 +1,11 @@
+---
+title: "Developer Guide"
+layout: default
+nav_order: 7
+has_children: true
+permalink: /developer/
+---
+
 # Case-Room — Developer & Architecture Guide
 
 Welcome to the internal engineering guide for **Case-Room**. This document details the system design, microkernel plugin model, Spec-Driven Development (SDD) governance, and the 5-Level Testing Pyramid.

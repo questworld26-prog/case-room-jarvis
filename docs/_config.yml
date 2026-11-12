@@ -1,0 +1,32 @@
+title: "Case-Room Documentation"
+description: "Classroom AI copilot that answers student questions strictly from assigned business cases."
+url: "https://questworld26-prog.github.io"
+baseurl: "/case-room-jarvis"
+
+# Remote theme supported natively by GitHub Pages
+remote_theme: just-the-docs/just-the-docs
+
+# Color scheme and navigation configuration
+color_scheme: "dark"
+search_enabled: true
+search:
+  heading_level: 3
+  previews: 3
+
+# Heading anchors
+heading_anchors: true
+
+# Navigation callouts / buttons
+aux_links:
+  "GitHub Repository":
+    - "https://github.com/questworld26-prog/case-room-jarvis"
+  "Interactive Architecture":
+    - "/case-room-jarvis/developer/architecture.html"
+  "Testing Protocol":
+    - "/case-room-jarvis/developer/testing.html"
+
+# Plugins required for GitHub Pages remote theme
+plugins:
+  - jekyll-remote-theme
+  - jekyll-seo-tag
+  - jekyll-sitemap

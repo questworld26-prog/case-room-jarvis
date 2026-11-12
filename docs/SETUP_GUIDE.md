@@ -1,3 +1,9 @@
+---
+title: "Setup Guide"
+layout: default
+nav_order: 2
+---
+
 # Setup Guide
 
 This guide takes you from a brand-new computer to a working Case-Room in about 20 minutes. **You don't need any coding experience.** You will copy and paste a few commands, and every step tells you what you should see when it worked.

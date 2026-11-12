@@ -1,3 +1,9 @@
+---
+title: "Classroom Flow"
+layout: default
+nav_order: 4
+---
+
 # Instructor Classroom Operating Workflow & Architecture Context
 
 This document captures the exact operational pattern and requirements for using the Business Case Chatbot in a live classroom environment. Agents and contributors should reference this document for all future reviews, test setups, and architectural decisions.

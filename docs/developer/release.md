@@ -1,3 +1,10 @@
+---
+title: "Release Notes"
+layout: default
+parent: "Developer Guide"
+nav_order: 2
+---
+
 # Case-Room — Release Notes
 
 All notable changes to Case-Room are documented in this file.

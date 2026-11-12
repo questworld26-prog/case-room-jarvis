@@ -1,3 +1,9 @@
+---
+title: "Adding a Case Study"
+layout: default
+nav_order: 5
+---
+
 # Adding Your Own Case Study
 
 Case-Room can run any case study you have as PDFs. This guide shows you how to add one, make it accurate, and (optionally) write your own quiz for it. It takes about 10 minutes, plus however long you spend writing quiz questions.
