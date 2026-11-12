@@ -151,9 +151,9 @@ Check that the files end in `.pdf` and are directly inside `resource/<YourCase>/
 The PDF is probably a scanned image. Run it through OCR, for example Adobe Acrobat's *Scan & OCR*, and try again.
 
 ### Quiz mode uses AI-generated questions instead of mine
-- The key in `data/quiz_banks.json` must match the folder name exactly, e.g. `"TeslaPricing"`.
-- If the terminal printed `Notice: unable to load data/quiz_banks.json` when Case-Room started, the file has a formatting error. Paste it into https://jsonlint.com to find it.
-- Restart Case-Room after editing the quiz file.
+- The quiz file must be named `quiz.md` directly inside your case folder, e.g. `resource/TeslaPricing/quiz.md`.
+- Run `uv run python -m tools.validate_quiz --case TeslaPricing` in your terminal to see if any headings, checkboxes, or answers have syntax errors.
+- Click **"🎯 Case Study Quiz Bank & Live Card Preview"** in the Admin panel to check that your questions display properly.
 
 ---
 

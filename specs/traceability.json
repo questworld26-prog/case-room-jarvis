@@ -1,8 +1,8 @@
 {
-  "last_audited_at": "2026-11-11T23:23:39.447927+00:00",
-  "total_requirements": 20,
-  "total_criteria": 65,
-  "verified_criteria_count": 65,
+  "last_audited_at": "2026-11-12T03:56:19.729100+00:00",
+  "total_requirements": 21,
+  "total_criteria": 70,
+  "verified_criteria_count": 70,
   "planned_requirements_count": 0,
   "reverse_traceability": {
     "untagged_files_count": 0,
@@ -295,6 +295,35 @@
       "implementation_files": [
         "src/chatbot.py",
         "src/core/quiz_engine.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "QUIZ-003",
+      "title": "Case Study Markdown Quiz Bank Parsing, Validation, and Admin Inspection",
+      "spec_file": "specs/core/quiz_pedagogy.md",
+      "is_planned": false,
+      "sha256": "c60503f8ff1f181b34daec20dae463b565c1e7bf30c1da9f0651af1965141c83",
+      "verified_sha256": "c60503f8ff1f181b34daec20dae463b565c1e7bf30c1da9f0651af1965141c83",
+      "acceptance_criteria": [
+        "AC-QUIZ-003.1",
+        "AC-QUIZ-003.2",
+        "AC-QUIZ-003.3",
+        "AC-QUIZ-003.4",
+        "AC-QUIZ-003.5"
+      ],
+      "verified_criteria": [
+        "AC-QUIZ-003.1",
+        "AC-QUIZ-003.2",
+        "AC-QUIZ-003.3",
+        "AC-QUIZ-003.4",
+        "AC-QUIZ-003.5"
+      ],
+      "implementation_files": [
+        "src/config.py",
+        "src/core/quiz_parser.py",
+        "src/tools/validate_quiz.py",
+        "src/ui/gradio_app.py"
       ],
       "status": "VERIFIED"
     },

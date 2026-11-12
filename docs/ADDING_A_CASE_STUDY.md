@@ -91,70 +91,66 @@ If you see *"⚠️ Found N potentially empty image-based exhibit(s)"*, your PDF
 
 If you don't author a quiz bank, Quiz Mode still works as an **open-ended oral exam**: Jarvis starts with a generic strategic question, dynamically asks follow-up questions based on the student's replies, and gives conversational feedback. However, it will **not** have clickable MCQ buttons, a strict 2-attempt counter, curated hints, or the automated end-of-quiz scorecard. 
 
-**For a structured, graded, or standardized classroom assessment, you should write your own quiz bank.**
+**For a structured, graded, or standardized classroom assessment, write your quiz in clean Markdown.**
 
-Quizzes live in the file `data/quiz_banks.json`. Open it in a text editor and add a new entry. The **key must match your folder name** exactly:
+Create a file named `quiz.md` directly inside your case folder, for example `resource/TeslaPricing/quiz.md`:
 
-```json
-{
-  "EcoBrew": [ "...existing EcoBrew questions, leave them alone..." ],
+```markdown
+# Tesla Pricing Quiz Bank
 
-  "TeslaPricing": [
-    {
-      "id": "Q1",
-      "question_number": 1,
-      "total_questions": 5,
-      "topic": "Price elasticity",
-      "type": "mcq",
-      "prompt_text": "By how much did Model 3 unit sales change after the 2023 price cut?",
-      "options": [
-        "A) They fell by about 5%",
-        "B) They rose by about 31%",
-        "C) They stayed flat",
-        "D) They doubled"
-      ],
-      "correct_option": "B",
-      "hint": "Look at Exhibit 4, which compares quarterly deliveries before and after the cut.",
-      "official_answer": "Deliveries rose roughly 31% quarter-on-quarter following the price cut (Exhibit 4)."
-    },
-    {
-      "id": "Q5",
-      "question_number": 5,
-      "total_questions": 5,
-      "topic": "Strategic trade-offs",
-      "type": "open_ended",
-      "prompt_text": "Evaluate whether the price cuts strengthened or weakened Tesla's long-term brand position.",
-      "rubric_key_points": [
-        "Higher volume improved manufacturing scale economies",
-        "Lower prices risked eroding the premium brand perception",
-        "Existing owners' resale values were hurt, damaging loyalty"
-      ],
-      "hint": "Consider effects on new buyers, existing owners, and margins separately.",
-      "official_answer": "A strong answer weighs scale benefits against premium-brand erosion and the effect on existing owners."
-    }
-  ]
-}
+## Q1: Price Elasticity & Volume Impact
+- **Type**: MCQ
+- **Hint**: Look at Exhibit 4, which compares quarterly deliveries before and after the cut.
+- **Official Answer**: Deliveries rose roughly 31% quarter-on-quarter following the price cut (Exhibit 4).
+
+### Question
+By how much did Model 3 unit sales change after the 2023 price cut?
+
+- [ ] A) They fell by about 5%
+- [x] B) They rose by about 31%
+- [ ] C) They stayed flat
+- [ ] D) They doubled
+
+---
+
+## Q5: Strategic Trade-Offs & Brand Position
+- **Type**: Open-Ended
+- **Hint**: Consider effects on new buyers, existing owners, and margins separately.
+- **Official Answer**: A strong answer weighs scale benefits against premium-brand erosion and the effect on existing owners.
+
+### Question
+Evaluate whether the price cuts strengthened or weakened Tesla's long-term brand position.
+
+### Answer (Rubric)
+- Higher volume improved manufacturing scale economies and factory utilization.
+- Lower prices risked eroding the premium brand perception and pricing power.
+- Existing owners' resale values were hurt, damaging brand loyalty.
 ```
 
-**Field reference**
+### Format Reference
 
-| Field | Required for | What to put |
-| :--- | :--- | :--- |
-| `id`, `question_number`, `total_questions` | all | Question order. Keep `total_questions` the same for every question. |
-| `topic` | all | A short label. It appears in the student's scorecard if they miss the question. |
-| `type` | all | `"mcq"` (multiple choice) or `"open_ended"` (written answer) |
-| `prompt_text` | all | The question itself |
-| `options` | `mcq` | Exactly four choices, each starting with `A)`, `B)`, `C)`, `D)` |
-| `correct_option` | `mcq` | The correct letter, e.g. `"B"` |
-| `rubric_key_points` | `open_ended` | 2–4 points a good answer should cover. Jarvis grades written answers against these. |
-| `hint` | all | Shown after a student's first wrong attempt. It should nudge without giving the answer away. |
-| `official_answer` | all | Shown after a second wrong attempt |
+| Element | Description |
+| :--- | :--- |
+| `## Q<N>: <Topic>` | Defines the question number and topic (used in the end-of-quiz scorecard). |
+| `- **Type**:` | `MCQ` (multiple-choice) or `Open-Ended` (analytical written response). |
+| `- **Hint**:` | Delivered after a student's first incorrect attempt to guide their thinking. |
+| `- **Official Answer**:` | Ground-truth explanation displayed after a second failed attempt or in grading. |
+| `### Question` | The exact prompt text students will read. |
+| Options (`- [ ]`, `- [x]`) | For MCQ: exactly 4 choices starting with `A)`, `B)`, `C)`, `D)`. Mark the correct choice with `- [x]`. |
+| `### Answer (Rubric)` | For Open-Ended: bulleted key points that Jarvis evaluates student answers against. |
 
 > [!TIP]
-> **Recommended structure:** questions 1–3 as multiple choice (recall and understanding), and questions 4–5 as open-ended (analysis and evaluation). The EcoBrew quiz in the same file is a complete working example you can copy.
+> **Recommended structure:** questions 1–3 as multiple choice (recall and core facts), and questions 4–5 as open-ended (strategic evaluation and trade-offs). Inspect `resource/EcoBrew/quiz.md` for a complete 5-question working example.
 
-> [!CAUTION]
-> JSON is fussy. A missing comma or quote mark will stop **all** quizzes from loading. Paste the whole file into https://jsonlint.com to check it before you save. If Case-Room prints `Notice: unable to load data/quiz_banks.json` when it starts, there's a formatting error.
+### Pre-Flight Verification Before Class
+
+To make sure your markdown quiz has zero formatting or checkbox errors before teaching, run the built-in validator from your terminal:
+
+```bash
+uv run python -m tools.validate_quiz --case TeslaPricing
+```
+
+You can also view the **"🎯 Case Study Quiz Bank & Live Card Preview"** accordion in the Instructor Admin Panel to verify the `🟢 Quiz Ready` badge and preview the interactive student buttons.
 
 ---
 

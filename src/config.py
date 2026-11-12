@@ -38,15 +38,26 @@ def get_default_case_study() -> str:
     return cases[0] if cases else "EcoBrew"
 
 
-# Load pre-authored quiz banks from data/quiz_banks.json if available
-QUIZ_BANKS_FILE = Path(__file__).resolve().parent.parent / "data" / "quiz_banks.json"
-PRE_AUTHORED_QUIZ_BANKS = {}
-if QUIZ_BANKS_FILE.exists():
-    try:
-        with open(QUIZ_BANKS_FILE, encoding="utf-8") as f:
-            PRE_AUTHORED_QUIZ_BANKS = json.load(f)
-    except Exception as err:
-        print(f"Notice: unable to load data/quiz_banks.json: {err}")
+# [spec: QUIZ-003]
+def load_all_case_quiz_banks() -> dict[str, list]:
+    """
+    Discover and parse authoritative markdown quiz banks (resource/<case>/quiz.md).
+    Returns an in-memory dictionary of {case_name: list_of_question_dicts}.
+    """
+    from core.quiz_parser import load_case_quiz_bank
+
+    res_dir = Path(__file__).resolve().parent.parent / "resource"
+    banks: dict[str, list] = {}
+    if res_dir.exists():
+        for case_dir in res_dir.iterdir():
+            if case_dir.is_dir() and not case_dir.name.startswith("."):
+                bank = load_case_quiz_bank(case_dir)
+                if bank:
+                    banks[case_dir.name] = bank
+    return banks
+
+
+PRE_AUTHORED_QUIZ_BANKS = load_all_case_quiz_banks()
 
 
 # [spec: QUIZ-001]
@@ -153,6 +164,11 @@ class AppState:
     def has_framework_modes(self) -> bool:
         """Return True if at least one registered mode plugin uses analytical frameworks."""
         return any(p.requires_framework for p in MODE_REGISTRY.values())
+
+    def reload_case_quiz_banks(self) -> None:
+        """Reload all markdown quiz banks from disk into memory."""
+        global PRE_AUTHORED_QUIZ_BANKS
+        PRE_AUTHORED_QUIZ_BANKS = load_all_case_quiz_banks()
 
     def get_first_quiz_question(self, case_name: str = None) -> str:
         case = case_name or self.active_case_study or get_default_case_study()

@@ -10,6 +10,7 @@ import gradio as gr
 
 from config import PRE_AUTHORED_QUIZ_BANKS, app_state, get_available_case_studies
 from core.cache_manager import get_or_create_cache
+from core.quiz_parser import get_quiz_validation_status
 from ui.admin_handlers import (
     add_custom_fw,
     confirm_mode_broadcast,
@@ -178,12 +179,51 @@ def _build_student_tab(chat_fn: Callable) -> None:
             _bind_quick_submit_button(chatbot_interface, btn, prompt_str)
 
 
+# [spec: QUIZ-003]
+def _render_admin_quiz_preview(case_name: str | None) -> str:
+    """Render markdown status and interactive HTML card previews for the admin inspection accordion."""
+    if not case_name:
+        return "*Select and load a case study above to inspect its quiz bank.*"
+    status = get_quiz_validation_status(case_name)
+    if not status["is_valid"]:
+        lines = [
+            f"### {status['badge']}",
+            f"> ⚠️ {status['alert_message']}",
+            "",
+            f"To enable curated Quiz Mode for **{case_name}**, create `resource/{case_name}/quiz.md`.",
+        ]
+        if status.get("errors"):
+            lines.append("\n**Validation Diagnostics:**")
+            for err in status["errors"]:
+                lines.append(f"- ❌ `{err}`")
+        return "\n".join(lines)
+
+    lines = [
+        f"### {status['badge']}",
+        f"Found **{status['total_questions']} verified questions** in `resource/{case_name}/quiz.md`.",
+        "",
+        "---",
+        "#### 👁️ Student Question Card Previews",
+    ]
+    for idx, card_html in enumerate(status["preview_cards"], start=1):
+        lines.append(f"\n<details open><summary><b>Question #{idx} Card</b></summary>\n\n{card_html}\n\n</details>")
+    return "\n".join(lines)
+
+
+# [spec: ADMIN-001]
+# [spec: QUIZ-003]
 def _load_selected_case_study(selected_case):
     if not selected_case:
-        return "⚠️ Please select a valid business case study.", gr.update(), get_admin_status()
+        return (
+            "⚠️ Please select a valid business case study.",
+            gr.update(),
+            get_admin_status(),
+            _render_admin_quiz_preview(selected_case),
+        )
     app_state.active_case_study = selected_case
     app_state.session_locked = True
     get_or_create_cache(selected_case, force_refresh=True, ttl=app_state.cache_ttl)
+    app_state.reload_case_quiz_banks()
     app_state.notify_mode_change()
     cache_status_info = ""
     if app_state.active_cache_name:
@@ -191,16 +231,16 @@ def _load_selected_case_study(selected_case):
             f"\n\n⚡ **Gemini Context Cache ACTIVE** ({app_state.active_cache_name[-18:]}, TTL: {app_state.cache_ttl})"
         )
     status = f"✅ Active Case Study set to: **{selected_case}** (Loaded {len(app_state.case_text_context):,} chars clean text context){cache_status_info}"
-    if selected_case not in PRE_AUTHORED_QUIZ_BANKS and not any(
-        k.lower() == selected_case.lower() for k in PRE_AUTHORED_QUIZ_BANKS
-    ):
+    quiz_val = get_quiz_validation_status(selected_case)
+    if quiz_val["is_valid"]:
+        status += f"\n\n{quiz_val['badge']}"
+    else:
         status += (
-            "\n\n⚠️ **No curated quiz bank found for this case.** "
-            "Quiz Mode will use LLM-generated questions (unverified). "
-            "Consider adding a bank to `data/quiz_banks.json` before running Quiz Mode."
+            f"\n\n⚠️ **No verified quiz bank found for this case ({quiz_val['badge']}).** "
+            f"Add or fix questions in `resource/{selected_case}/quiz.md` before running Quiz Mode."
         )
     locked_input = gr.update(interactive=False, label=f"🔒 Session ID (Locked — Class is Live: {app_state.session_id})")
-    return status, locked_input, get_admin_status()
+    return status, locked_input, get_admin_status(), _render_admin_quiz_preview(selected_case)
 
 
 def _unlock_admin_panel(input_password):
@@ -274,6 +314,7 @@ def _build_admin_system_settings(
     case_study_radio: gr.Radio,
     case_status_msg: gr.Markdown,
     admin_summary_banner: gr.Markdown,
+    quiz_preview_md: gr.Markdown,
 ) -> gr.Image:
     """Build TTL, Model ID, Session ID, cache reload, and QR code controls."""
     gr.Markdown("---")
@@ -303,7 +344,7 @@ def _build_admin_system_settings(
             load_case_btn.click(
                 fn=_load_selected_case_study,
                 inputs=case_study_radio,
-                outputs=[case_status_msg, session_id_input, admin_summary_banner],
+                outputs=[case_status_msg, session_id_input, admin_summary_banner, quiz_preview_md],
             )
             refresh_btn = gr.Button("🔄 Reload Case Text Context", variant="primary")
             refresh_status = gr.Markdown()
@@ -350,6 +391,14 @@ def _build_admin_tab() -> gr.Image:
             case_status_msg = gr.Markdown(
                 value=f"Active Case Study: **{app_state.active_case_study or 'Not Initialized (Select and click Load)'}**"
             )
+            with gr.Accordion("🎯 Case Study Quiz Bank & Live Card Preview", open=False):
+                quiz_preview_md = gr.Markdown(value=_render_admin_quiz_preview(app_state.active_case_study))
+
+            case_study_radio.change(
+                fn=_render_admin_quiz_preview,
+                inputs=case_study_radio,
+                outputs=quiz_preview_md,
+            )
             gr.Markdown("---")
             gr.Markdown("## 📊 Live Class Dashboard")
             live_student_count = gr.Markdown(
@@ -366,7 +415,7 @@ def _build_admin_tab() -> gr.Image:
             gr.Markdown("---")
             _build_admin_mode_and_framework_controls(admin_summary_banner)
             qr_image = _build_admin_system_settings(
-                load_case_btn, case_study_radio, case_status_msg, admin_summary_banner
+                load_case_btn, case_study_radio, case_status_msg, admin_summary_banner, quiz_preview_md
             )
 
         admin_unlock_btn.click(
