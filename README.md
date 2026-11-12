@@ -4,7 +4,7 @@
 
 It was built for, and tested in, a live 3-hour business school session with about 50 students. You run it on your own laptop. There are no servers to rent and nothing for students to install.
 
-<!-- TODO: add a screenshot of the student chat screen here, e.g. ![Student chat](docs/images/student-chat.png) -->
+![Jarvis Student Chatroom](docs/images/student-chat.png)
 
 ---
 
@@ -19,6 +19,15 @@ It was built for, and tested in, a live 3-hour business school session with abou
 - **Evidence for your debrief.** Every exchange is logged with the student's name and a timestamp, so you can see what the class asked about and where they struggled.
 - **Low cost.** It uses Google's Gemini API. A free API key works for small groups and testing. For a full class, a pay-as-you-go key usually costs a few dollars per session.
 - **Works with any case.** Drop your PDFs into a folder, run one command, and the case appears in the instructor panel.
+
+<details>
+<summary>📸 <strong>Click to preview the Instructor Admin Panel</strong></summary>
+
+<p align="center">
+  <img src="docs/images/admin-panel.png" alt="Instructor Admin Panel" width="600"/>
+</p>
+
+</details>
 
 ---
 
@@ -41,11 +50,11 @@ uv sync
 # 3. Add your Gemini API key (get one free at https://aistudio.google.com/apikey)
 cp .env.example .env        # then edit .env and paste your key
 
-# 4. Launch
-PYTHONPATH=src uv run python src/chatbot.py
+# 4. Launch (works identically on macOS, Windows, and Linux)
+uv run python src/chatbot.py
 ```
 
-The terminal prints a public link (`https://xxxx.gradio.live`) and saves a QR code to `static/classroom_qr.png`. Open the link, go to **🔐 Instructor Admin Panel**, enter your password, pick the case study, and click **🚀 Load Selected Case Study**. Your class is live.
+The terminal prints a public link (`https://xxxx.gradio.live`) and saves a QR code to `static/classroom_qr.png`. Open the link, go to **🔐 Instructor Admin Panel**, enter your password (`admin123` by default, configured in `.env`), press **Enter**, pick the case study, and click **🚀 Load Selected Case Study**. Your class is live.
 
 ---
 

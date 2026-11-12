@@ -20,6 +20,7 @@ Loads preprocessed extracted_context.txt text directly for sub-3s response laten
 import asyncio
 import os
 import re
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -29,6 +30,48 @@ from config import app_state, get_default_case_study
 
 RESOURCE_ROOT = Path(__file__).resolve().parent.parent.parent / "resource"
 _GENAI_CLIENT_CACHE: dict[tuple[str, Any], genai.Client] = {}
+
+
+# [spec: CACHE-004]
+def validate_gemini_api_key() -> tuple[bool, str]:
+    """Verify GOOGLE_API_KEY is non-empty and authenticates against the Gemini API."""
+    api_key = (os.getenv("GOOGLE_API_KEY") or "").strip()
+    if not api_key:
+        return False, "GOOGLE_API_KEY environment variable is missing or empty."
+    try:
+        client = genai.Client(api_key=api_key)
+        client.models.get(model=app_state.model_id)
+        return True, ""
+    except Exception as exc:
+        return False, f"Google Gemini API key validation failed: {exc}"
+
+
+# [spec: CACHE-004]
+def format_api_key_startup_alert(reason: str, use_color: bool | None = None) -> str:
+    """Format a prominent bordered terminal banner explaining why startup halted on API key failure."""
+    if use_color is None:
+        use_color = hasattr(sys.stderr, "isatty") and sys.stderr.isatty()
+
+    red = "\033[1;31m" if use_color else ""
+    yellow = "\033[1;33m" if use_color else ""
+    cyan = "\033[1;36m" if use_color else ""
+    reset = "\033[0m" if use_color else ""
+
+    bar = "=" * 72
+    lines = [
+        f"{red}{bar}{reset}",
+        f"{red}🚨 STARTUP HALTED: GOOGLE GEMINI API KEY MISSING OR INVALID{reset}",
+        f"{red}{bar}{reset}",
+        f"{red}❌ Reason: {reason}{reset}",
+        "",
+        f"{cyan}🔧 How to fix:{reset}",
+        "   1. Create or check your key at https://aistudio.google.com/apikey",
+        "   2. Set GOOGLE_API_KEY=your_actual_key in your .env file (no quotes or spaces)",
+        "   3. See docs/TROUBLESHOOTING.md ('API key not valid', '403', or 'PERMISSION_DENIED')",
+        f"{yellow}⚠️ Application startup aborted. Server will not start without a valid Gemini API key.{reset}",
+        f"{red}{bar}{reset}",
+    ]
+    return "\n".join(lines)
 
 
 # [spec: CACHE-002]

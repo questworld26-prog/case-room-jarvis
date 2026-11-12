@@ -1,8 +1,8 @@
 {
-  "last_audited_at": "2026-11-12T06:01:09.277474+00:00",
-  "total_requirements": 24,
-  "total_criteria": 82,
-  "verified_criteria_count": 82,
+  "last_audited_at": "2026-11-12T08:40:17.277311+00:00",
+  "total_requirements": 25,
+  "total_criteria": 85,
+  "verified_criteria_count": 85,
   "planned_requirements_count": 0,
   "reverse_traceability": {
     "untagged_files_count": 0,
@@ -115,6 +115,29 @@
         "src/core/quiz_parser.py",
         "src/ui/admin_handlers.py",
         "src/ui/gradio_app.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "CACHE-004",
+      "title": "Startup Gemini API Key Validation and Fail-Fast Halt",
+      "spec_file": "specs/core/case_cache_config.md",
+      "is_planned": false,
+      "sha256": "41fcdc4ef00995d6e205ed2a070a67cd6c33f3c5594f1e0f54e8cb362cd6e52b",
+      "verified_sha256": "41fcdc4ef00995d6e205ed2a070a67cd6c33f3c5594f1e0f54e8cb362cd6e52b",
+      "acceptance_criteria": [
+        "AC-CACHE-004.1",
+        "AC-CACHE-004.2",
+        "AC-CACHE-004.3"
+      ],
+      "verified_criteria": [
+        "AC-CACHE-004.1",
+        "AC-CACHE-004.2",
+        "AC-CACHE-004.3"
+      ],
+      "implementation_files": [
+        "src/chatbot.py",
+        "src/core/cache_manager.py"
       ],
       "status": "VERIFIED"
     },

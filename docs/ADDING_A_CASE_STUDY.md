@@ -17,7 +17,7 @@ Case-Room can run any case study you have as PDFs. This guide shows you how to a
 
 ## Step 1: Create a folder for the case
 
-Inside the `case-room/resource/` folder, create a new folder named after your case. **Use letters, numbers, and underscores only, with no spaces**, for example:
+Inside the `case-room/resource/` folder, create a new folder named after your case. Use letters, numbers, and underscores only, **with no spaces**, for example:
 
 ```text
 case-room/
@@ -45,11 +45,12 @@ Copy your case materials into the new folder. You can add several PDFs, for exam
 | `question`, `quiz`, `rubric`, or `outline` | **Teaching reference**. Jarvis can see it, but it's marked as *not* case facts. | `Discussion_Questions.pdf` |
 | anything else | **Supporting document** | `Tesla_10K_2024_excerpt.pdf` |
 
+> [!IMPORTANT]
+> **The Cursor Highlight Test (Avoid Scanned Image PDFs):**
+> Jarvis reads digital text, not images. Open your PDF and try to highlight a sentence with your mouse cursor. If you can select words, your PDF is ready. If clicking and dragging selects a blue box over the entire page or selects nothing, the PDF is a scanned image! Run it through OCR (e.g., Adobe Acrobat *Scan & OCR*) before adding it, or Jarvis will read 0 characters.
+
 > [!WARNING]
 > **Jarvis can see everything in the folder.** Don't include an instructor-only teaching note or answer key unless you're fine with students being able to get its contents by asking. Keep those PDFs somewhere else.
-
-> [!NOTE]
-> **Scanned PDFs won't work.** The PDF needs real, selectable text. A quick test: open it and try to highlight a sentence with your mouse. If you can't, it's an image scan and needs to be OCR'd first (for example with Adobe Acrobat's *Scan & OCR* tool) before you add it.
 
 ---
 
@@ -57,17 +58,16 @@ Copy your case materials into the new folder. You can add several PDFs, for exam
 
 The preprocessor reads your PDFs, removes clutter like page numbers and copyright footers, and saves a clean text version that Jarvis uses. You need to run it again **every time you add or change files in the folder.**
 
-Open a terminal **in the `case-room` folder** (see [Setup Guide step 5](SETUP_GUIDE.md#5-download-case-room)) and run the command below. Replace `TeslaPricing` with your folder name.
+Open a terminal **in the `case-room` folder** (see [Setup Guide step 5](SETUP_GUIDE.md#5-download-case-room)) and run:
 
-**Mac / Linux:**
 ```bash
-PYTHONPATH=src uv run python src/tools/preprocess_case.py --case TeslaPricing
+uv run python src/tools/preprocess_case.py --case TeslaPricing
 ```
 
-**Windows (PowerShell):**
-```powershell
-$env:PYTHONPATH="src"; uv run python src/tools/preprocess_case.py --case TeslaPricing
-```
+*(Replace `TeslaPricing` with your exact folder name. This command works identically on macOS, Windows, and Linux.)*
+
+> [!NOTE]
+> **What if you forget to run the preprocessor?** Case-Room has an automatic fallback: when you load a case in the Admin Panel, it will automatically extract text directly from your PDFs and generate `extracted_context.txt` on the fly. However, running the preprocessor is strongly recommended because it strips copyright noise, removes page headers/footers, and creates the High-Value Summary.
 
 ✅ You should see something like:
 
@@ -185,7 +185,7 @@ If a startup banner, Admin Panel alert, or student warning flags an issue with y
 
 ## Making answers more accurate
 
-**Add exhibit data as text.** Charts and tables that are images inside a PDF are invisible to Jarvis. If students are likely to ask about them, type the numbers into a text file in the case folder named **`supplementary_exhibits.txt`**, for example:
+**Add exhibit data as text. Charts and tables that are images inside a PDF are invisible to Jarvis**. If students are likely to ask about them, type the numbers into a text file in the case folder named **`supplementary_exhibits.txt`**, for example:
 
 ```markdown
 ## Exhibit 4: Quarterly Deliveries

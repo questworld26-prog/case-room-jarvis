@@ -30,6 +30,7 @@ import gradio as gr
 from google.genai import types
 
 from config import app_state, get_case_quiz_bank
+from core import cache_manager
 from core.cache_manager import get_genai_client, get_or_create_cache
 from core.dialogue_utils import (
     build_clean_gemini_contents,
@@ -355,7 +356,6 @@ def _log_chat_turn(
 
 
 async def _stream_gemini_with_retries(message: str, history: list, clean_sname: str, start_time: float):
-    client = get_genai_client()
     formatted_contents, full_system_instruction, use_cached_content = _prepare_gemini_request(message, history)
     dynamic_sys = app_state.get_system_instruction()
     token_limit = app_state.get_active_plugin().max_output_tokens
@@ -363,6 +363,7 @@ async def _stream_gemini_with_retries(message: str, history: list, clean_sname: 
 
     for retry_attempt in range(1, max_retries + 1):
         try:
+            client = get_genai_client()
             cfg = {
                 "temperature": 0.2,
                 "max_output_tokens": token_limit,
@@ -504,10 +505,20 @@ def resolve_safe_static_path(file_path: str) -> Path | None:
     return None
 
 
+# [spec: CACHE-004]
 # [spec: UI-004]
 # [spec: UI-005]
 # [spec: ADMIN-001]
 def launch_app(share: bool = True):
+    key_ok, key_reason = cache_manager.validate_gemini_api_key()
+    if not key_ok:
+        print(
+            cache_manager.format_api_key_startup_alert(key_reason) + "\n",
+            file=sys.stderr,
+            flush=True,
+        )
+        raise SystemExit(1)
+
     from fastapi import HTTPException
     from starlette.responses import FileResponse
 

@@ -59,7 +59,7 @@ lsof -ti :7860 | xargs kill -9
 
 **Windows (PowerShell):**
 ```powershell
-Get-Process -Id (Get-NetTCPConnection -LocalPort 7860).OwningProcess | Stop-Process -Force
+Get-NetTCPConnection -LocalPort 7860 -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }
 ```
 
 Then start Case-Room again.
@@ -70,11 +70,13 @@ Case-Room couldn't create the public link students need.
 2. **The network may block the tunnel.** Many university and corporate networks do. Try a phone hotspot to confirm. If that's the cause, ask IT to allow `*.gradio.live`, or run class over a hotspot.
 3. **Antivirus may block it.** Gradio downloads a small helper program called `frpc` to create the link, and some antivirus tools quarantine it. Allow it in your antivirus settings and restart Case-Room.
 
-### Terminal shows "API key not valid", "403", or "PERMISSION_DENIED"
-1. Open the `.env` file (`open -e .env` on Mac, `notepad .env` on Windows).
-2. Check the `GOOGLE_API_KEY=` line. It needs the full key, with no spaces or quote marks.
-3. Check that the key still exists at https://aistudio.google.com/apikey.
-4. Save the file and restart Case-Room.
+### Startup halted: "GOOGLE GEMINI API KEY MISSING OR INVALID" (or 400 API_KEY_INVALID)
+Case-Room validates your Gemini API key immediately upon startup before launching the web server. If your key is missing, expired, or invalid, the app halts with a clear red diagnostic box:
+1. Check that you created a `.env` file (copy `.env.example` to `.env`).
+2. Open `.env` in a text editor (`nano .env` or `open -e .env` on Mac, `notepad .env` on Windows).
+3. Ensure the line is formatted as `GOOGLE_API_KEY=AIzaSy...` with your actual key from https://aistudio.google.com/apikey.
+4. **Do NOT wrap the key in quotes** (`"` or `'`) and ensure there are no leading or trailing spaces.
+5. Save the file and launch Case-Room again (`uv run python src/chatbot.py`).
 
 ### Browser shows a blank page
 1. Hard-refresh: `Cmd + Shift + R` (Mac) or `Ctrl + Shift + R` (Windows).
@@ -144,8 +146,33 @@ Quiz progress is stored in the student's browser tab, so refreshing or closing t
 
 ## Adding a case study
 
+### Startup alert: "CASE STUDY SETUP / QUIZ BANK VALIDATION FAILED"
+If you created a new folder in `resource/` but haven't added case documents or a quiz yet:
+1. **Case-Room is still running**: The alert notifies you that your draft case study is incomplete. Valid case studies (like the built-in EcoBrew demonstration case) can still be loaded and used normally.
+2. **To complete your case**:
+   - Add your case PDF(s) directly into `resource/<YourCase>/`.
+   - Run the preprocessor: `uv run python src/tools/preprocess_case.py --case <YourCase>`.
+   - Author your quiz in `resource/<YourCase>/quiz.md` (see [Adding a Case Study](ADDING_A_CASE_STUDY.md)).
+   - In the Admin Panel, click **🔄 Reload Case Text Context** or restart Case-Room. The alert will clear automatically.
+
 ### "⚠️ Warning: No PDF files found"
 Check that the files end in `.pdf` and are directly inside `resource/<YourCase>/`.
+
+### Case loaded 0 chars or "Case Study Incomplete"
+If loading your case reports `Loaded 0 chars clean text context`, Jarvis cannot read any text from the PDF:
+1. **Check if the PDF is scanned**: Open the PDF and try to highlight a sentence with your cursor. If you cannot highlight words, the PDF is a scanned image rather than digital text.
+2. **Run OCR**: Use an OCR tool (such as Adobe Acrobat's *Scan & OCR* or an online OCR tool) to recognize text and save a searchable PDF.
+3. **Add exhibit tables**: If the PDF is mostly scanned charts, type the critical numbers into `resource/<YourCase>/supplementary_exhibits.txt`.
+4. **Re-run the preprocessor**: `uv run python src/tools/preprocess_case.py --case <YourCase>`.
+
+### I forgot to run the preprocessor
+If you dropped your PDFs into `resource/<YourCase>/` but did not run `preprocess_case.py`:
+- **Automatic Fallback**: Case-Room automatically extracts text directly from your PDFs upon loading and generates `extracted_context.txt` on the fly.
+- **Recommended**: Run `uv run python src/tools/preprocess_case.py --case <YourCase>` when possible, as it strips repetitive copyright headers and page numbers, and generates an Executive Summary.
+
+### Preprocessor error: "unrecognized arguments: ..."
+If running `preprocess_case.py` gives `unrecognized arguments`, your folder name likely has spaces (e.g. `resource/Tesla Pricing/`).
+- Rename the folder to use letters, numbers, and underscores only with no spaces: `resource/TeslaPricing/` or `resource/Tesla_Pricing/`.
 
 ### `extracted_context.txt` is empty or gibberish
 The PDF is probably a scanned image. Run it through OCR, for example Adobe Acrobat's *Scan & OCR*, and try again.

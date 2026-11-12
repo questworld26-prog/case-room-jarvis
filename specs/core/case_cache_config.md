@@ -26,3 +26,12 @@ Acceptance Criteria:
 - AC-CACHE-003.3: When loading a case study directory that lacks readable case materials, the context loader shall avoid duplicate empty extraction scans and log one diagnostic warning.
 - AC-CACHE-003.4: While any discovered case study directory lacks case materials or a markdown quiz bank, the admin panel top alert banner shall list each incomplete folder with setup instructions and clear automatically once resolved.
 
+## CACHE-004: Startup Gemini API Key Validation and Fail-Fast Halt
+
+While starting the web application, the startup validator shall verify that the Gemini API key is configured and authenticates cleanly, halting startup with a prominent warning when the key is missing or invalid.
+
+Acceptance Criteria:
+- AC-CACHE-004.1: When validating startup credentials while the Gemini API key environment variable is missing or empty, the startup validator shall reject configuration with an explicit missing-key diagnostic before any network call.
+- AC-CACHE-004.2: When validating startup credentials with a configured Gemini API key that fails authentication or model lookup, the startup validator shall reject configuration with the diagnostic failure reason.
+- AC-CACHE-004.3: When launching the application while startup credential validation fails, the launcher shall print a bordered startup-halted warning banner and abort startup before starting the web server.
+

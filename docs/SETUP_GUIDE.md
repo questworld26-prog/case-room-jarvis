@@ -96,6 +96,8 @@ cd /path/to/case-room
 ```
 
 > [!TIP]
+> **Windows Shortcut**: Open File Explorer, go into the `case-room` folder, click the address bar at the top, type `powershell`, and press Enter. A terminal opens directly inside your folder without needing to type `cd`!
+>
 > Every command from here on must be run from inside the `case-room` folder. If a command says it can't find a file, run this `cd` step again first.
 
 ---
@@ -144,20 +146,23 @@ ADMIN_PASSWORD=pick-a-strong-password
 
 > [!NOTE]
 > **Mac users:** Finder hides files whose names start with a dot, such as `.env`. Press `Cmd + Shift + .` in Finder to show them.
+> 
+> **TextEdit Tip:** Do not wrap your API key or password in quotation marks (`"..."`). Apple TextEdit can convert straight quotes into curly quotes (`“...”`), which breaks the key.
 
 ---
 
 ## 8. Launch it for the first time
 
-**Mac / Linux:**
+In your terminal, run:
+
 ```bash
-PYTHONPATH=src uv run python src/chatbot.py
+uv run python src/chatbot.py
 ```
 
-**Windows (PowerShell):**
-```powershell
-$env:PYTHONPATH="src"; uv run python src/chatbot.py
-```
+*(This command works identically on macOS, Windows, and Linux. No environment variable flags needed.)*
+
+> [!NOTE]
+> **Automatic API Key Check:** Case-Room verifies your `GOOGLE_API_KEY` on startup before opening the server. If your key is missing, expired, or invalid, it halts immediately with a clear red diagnostic box explaining how to fix it.
 
 After 10–30 seconds you should see:
 
@@ -187,18 +192,10 @@ To stop Case-Room, click in the terminal and press `Ctrl + C`.
 
 ## 9. Starting it again next time
 
-You don't need to repeat steps 1–7. Before each class, open a terminal and run:
+You don't need to repeat steps 1–7. Before each class, open a terminal in the `case-room` folder and run:
 
-**Mac / Linux:**
 ```bash
-cd /path/to/case-room
-PYTHONPATH=src uv run python src/chatbot.py
-```
-
-**Windows (PowerShell):**
-```powershell
-cd C:\path\to\case-room
-$env:PYTHONPATH="src"; uv run python src/chatbot.py
+uv run python src/chatbot.py
 ```
 
 ---

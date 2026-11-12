@@ -31,7 +31,7 @@ flowchart LR
 
 ## 2. The Student Chatroom
 
-<!-- TODO: screenshot docs/images/student-chat.png -->
+![Jarvis Student Chatroom](images/student-chat.png)
 
 This is the screen students see after scanning the QR code. It works on phones, tablets, and laptops.
 
@@ -69,9 +69,16 @@ This is the screen students see after scanning the QR code. It works on phones, 
 
 ## 3. The Instructor Admin Panel
 
-<!-- TODO: screenshot docs/images/admin-panel.png -->
-
 Click the **🔐 Instructor Admin Panel** tab, type your password (the `ADMIN_PASSWORD` in your `.env` file), and press **Enter**. The password box disappears and the **⚙️ Instructor Control Center** opens. From top to bottom, it has these sections.
+
+<details>
+<summary>📸 <strong>Click to expand the full Instructor Admin Panel screenshot</strong></summary>
+
+<p align="center">
+  <img src="images/admin-panel.png" alt="Instructor Admin Panel Layout" width="650"/>
+</p>
+
+</details>
 
 ### 3.1 Session overview banner
 
@@ -189,21 +196,7 @@ Files starting with `test_` come from automated tests, not your class. You can i
 `.jsonl` files are plain text. A quick way to read one as a spreadsheet:
 
 1. Open **Excel → Data → Get Data → From File → From JSON**. Choose *All files* in the file picker so you can select the `.jsonl` file. Power Query turns each line into a row.
-2. Or open the file in any text editor to skim the conversations.
-
-### Generating the session debrief report (PDF)
-
-Case-Room includes an analytics engine (`src/analytics_engine/`) that turns a log into a multi-page PDF debrief. The report covers:
-
-- **Engagement:** total questions, active students, questions per student, and a participation-equality score (did a few students dominate?)
-- **Cognitive depth:** questions grouped by Bloom's taxonomy level (remember → understand → apply → analyse → evaluate)
-- **Topics & learning gaps:** which parts of the case students asked about most, and which they never touched
-- **AI quality audit:** how often Jarvis stayed grounded in the case
-
-Reports are saved to `logs/reports/`.
-
-> [!IMPORTANT]
-> **TODO before publishing:** add the one-line command for generating a report from a log file here, once the report CLI (`src/tools/eval_classroom_logs.py`) is restored.
+2. Or open the file in any text editor to skim the conversations and review student engagement directly.
 
 ---
 
