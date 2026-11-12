@@ -43,8 +43,8 @@ If you are comfortable with a terminal:
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # 2. Get the code and install dependencies
-git clone https://github.com/case-room/case-room.git
-cd case-room
+git clone https://github.com/questworld26-prog/case-room-jarvis.git
+cd case-room-jarvis
 uv sync
 
 # 3. Add your Gemini API key (get one free at https://aistudio.google.com/apikey)

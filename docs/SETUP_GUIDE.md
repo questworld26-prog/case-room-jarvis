@@ -86,19 +86,19 @@ Pick **one** of these options.
 **Option B: Use git** (if you already have it)
 ```bash
 cd ~/Documents
-git clone https://github.com/case-room/case-room.git
+git clone https://github.com/questworld26-prog/case-room-jarvis.git
 ```
 
-Now point the terminal at that folder. Type `cd ` (with a space after it), **drag the `case-room` folder from Finder or File Explorer into the terminal window**, and press Enter. The folder's path fills in for you.
+Now point the terminal at that folder. Type `cd ` (with a space after it), **drag the `case-room-jarvis` folder from Finder or File Explorer into the terminal window**, and press Enter. The folder's path fills in for you.
 
 ```bash
-cd /path/to/case-room
+cd /path/to/case-room-jarvis
 ```
 
 > [!TIP]
-> **Windows Shortcut**: Open File Explorer, go into the `case-room` folder, click the address bar at the top, type `powershell`, and press Enter. A terminal opens directly inside your folder without needing to type `cd`!
+> **Windows Shortcut**: Open File Explorer, go into the `case-room-jarvis` folder, click the address bar at the top, type `powershell`, and press Enter. A terminal opens directly inside your folder without needing to type `cd`!
 >
-> Every command from here on must be run from inside the `case-room` folder. If a command says it can't find a file, run this `cd` step again first.
+> Every command from here on must be run from inside the repository folder. If a command says it can't find a file, run this `cd` step again first.
 
 ---
 
