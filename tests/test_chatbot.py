@@ -21,10 +21,10 @@ import asyncio
 import time
 
 import pytest
-from core.cache_manager import get_or_create_cache, validate_gemini_api_key
 
 from chatbot import chat
 from config import app_state, get_default_case_study
+from core.cache_manager import get_or_create_cache, validate_gemini_api_key
 
 _has_gemini, _gemini_reason = validate_gemini_api_key()
 requires_live_gemini = pytest.mark.skipif(
