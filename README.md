@@ -1,9 +1,13 @@
 # Case-Room — an AI case study companion for your classroom
 
 [![CI](https://github.com/questworld26-prog/case-room-jarvis/actions/workflows/ci.yml/badge.svg)](https://github.com/questworld26-prog/case-room-jarvis/actions/workflows/ci.yml)
+[![Documentation](https://img.shields.io/badge/docs-online-brightgreen.svg)](https://questworld26-prog.github.io/case-room-jarvis/)
 [![Release](https://img.shields.io/github/v/tag/questworld26-prog/case-room-jarvis?color=green&label=release)](https://github.com/questworld26-prog/case-room-jarvis/releases)
 [![Python](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+
+> [!TIP]
+> 🌐 **Interactive Documentation Website**: View the complete user guides, classroom workflows, and explorable architecture diagrams online at **[questworld26-prog.github.io/case-room-jarvis](https://questworld26-prog.github.io/case-room-jarvis/)**.
 
 **Case-Room** gives every student in your class a personal AI teaching assistant, **Jarvis**, that answers questions using **only the case study you assign**. Students scan a QR code, type their name, and start asking questions from their phone or laptop. You control the session from a password-protected instructor panel, and after class you get a log of every question asked.
 
