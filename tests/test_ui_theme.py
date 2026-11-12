@@ -399,3 +399,68 @@ def test_live_server_theme_endpoint():
     except (requests.ConnectionError, requests.Timeout):
         # In isolated CI without a live daemon, this test gracefully passes
         pytest.skip("Local test server on port 7860 is not running; skipping live HTTP check.")
+
+
+# [verifies: ADMIN-002/AC-ADMIN-002.1]
+def test_admin_unlock_recovers_after_invalid_password():
+    """Verify invalid password skips unmounted panel/timer updates so subsequent valid password unlocks cleanly."""
+    from config import app_state
+    from ui.gradio_app import _unlock_admin_panel
+
+    wrong_res = _unlock_admin_panel("__definitely_wrong_password__")
+    panel_upd, status_msg, auth_row_upd, banner_upd, timer_upd = wrong_res
+    assert "Incorrect password" in status_msg
+    assert panel_upd == {"__type__": "update"}, "Must skip unmounted panel update on invalid password"
+    assert auth_row_upd == {"__type__": "update"}
+    assert banner_upd == {"__type__": "update"}
+    assert timer_upd == {"__type__": "update"}
+
+    right_res = _unlock_admin_panel(app_state.admin_password)
+    panel_upd2, status_msg2, auth_row_upd2, _banner_upd2, timer_upd2 = right_res
+    assert "unlocked successfully" in status_msg2
+    assert panel_upd2.get("visible") is True
+    assert auth_row_upd2.get("visible") is False
+    assert timer_upd2.get("active") is True
+
+
+# [verifies: UI-005/AC-UI-005.4]
+def test_light_mode_canvas_and_admin_surfaces():
+    """Verify light mode applies a distinct slate canvas background and elevated white surfaces matching dark mode."""
+    assert "--gemini-canvas-bg: #E8EEF5;" in custom_css
+    assert "--gemini-canvas-gradient:" in custom_css
+    assert "--body-background-fill: var(--gemini-canvas-bg);" in custom_css
+    assert "--block-background-fill: #FFFFFF;" in custom_css
+    assert "gradio-app" in custom_css
+    assert "html:not(.dark) #admin-control-center" in custom_css
+    assert contrast_ratio("#0F172A", "#E8EEF5") >= 7.0
+    assert contrast_ratio("#475569", "#E8EEF5") >= 4.5
+
+
+# [verifies: QUIZ-004/AC-QUIZ-004.3]
+def test_invalid_quiz_bank_error_card_and_theme_styles(tmp_path, monkeypatch):
+    """Verify invalid quiz bank preview renders high-contrast error card styling across light and dark themes."""
+    from ui.gradio_app import _render_admin_quiz_preview
+
+    case_dir = tmp_path / "resource" / "BrokenCase"
+    case_dir.mkdir(parents=True)
+    (case_dir / "quiz.md").write_text(
+        "## Q1: Missing Correct Option\n"
+        "- **Type**: MCQ\n"
+        "- **Official Answer**: B\n\n"
+        "### Question\n"
+        "Which option?\n\n"
+        "- [ ] A) 1\n"
+        "- [ ] B) 2\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr("core.quiz_parser.get_case_resource_dir", lambda case: tmp_path / "resource" / case)
+
+    preview_html = _render_admin_quiz_preview("BrokenCase")
+    assert "quiz-bank-section is-error" in preview_html
+    assert "quiz-bank-status-pill is-error" in preview_html
+    assert "quiz-bank-errors" in preview_html
+    assert "uv run python src/tools/validate_quiz.py --case BrokenCase" in preview_html
+    assert ".quiz-bank-section.is-error" in custom_css
+    assert ".quiz-bank-alert-banner" in custom_css
+    assert contrast_ratio("#991B1B", "#FEF2F2") >= 7.0
+    assert contrast_ratio("#FEE2E2", "#2C1215") >= 7.0

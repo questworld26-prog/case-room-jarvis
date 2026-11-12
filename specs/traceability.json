@@ -1,8 +1,8 @@
 {
-  "last_audited_at": "2026-11-12T04:36:56.926141+00:00",
-  "total_requirements": 21,
-  "total_criteria": 70,
-  "verified_criteria_count": 70,
+  "last_audited_at": "2026-11-12T06:00:08.120284+00:00",
+  "total_requirements": 24,
+  "total_criteria": 82,
+  "verified_criteria_count": 82,
   "planned_requirements_count": 0,
   "reverse_traceability": {
     "untagged_files_count": 0,
@@ -88,6 +88,33 @@
       "implementation_files": [
         "src/config.py",
         "src/core/cache_manager.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "CACHE-003",
+      "title": "Empty or Incomplete Case Study Folder Diagnostics",
+      "spec_file": "specs/core/case_cache_config.md",
+      "is_planned": false,
+      "sha256": "f619e4d61f7c0fb92a4838d2bf366fd9e312ffd7320f5343df3667e19c9708c6",
+      "verified_sha256": "f619e4d61f7c0fb92a4838d2bf366fd9e312ffd7320f5343df3667e19c9708c6",
+      "acceptance_criteria": [
+        "AC-CACHE-003.1",
+        "AC-CACHE-003.2",
+        "AC-CACHE-003.3",
+        "AC-CACHE-003.4"
+      ],
+      "verified_criteria": [
+        "AC-CACHE-003.1",
+        "AC-CACHE-003.2",
+        "AC-CACHE-003.3",
+        "AC-CACHE-003.4"
+      ],
+      "implementation_files": [
+        "src/core/cache_manager.py",
+        "src/core/quiz_parser.py",
+        "src/ui/admin_handlers.py",
+        "src/ui/gradio_app.py"
       ],
       "status": "VERIFIED"
     },
@@ -328,6 +355,35 @@
       "status": "VERIFIED"
     },
     {
+      "requirement_id": "QUIZ-004",
+      "title": "Prominent Startup and Admin Quiz Validation Diagnostics",
+      "spec_file": "specs/core/quiz_pedagogy.md",
+      "is_planned": false,
+      "sha256": "41379db22d5d69afd5806d9b9a9c9d72e815bd2275cc1df3a2b16901208a4441",
+      "verified_sha256": "41379db22d5d69afd5806d9b9a9c9d72e815bd2275cc1df3a2b16901208a4441",
+      "acceptance_criteria": [
+        "AC-QUIZ-004.1",
+        "AC-QUIZ-004.2",
+        "AC-QUIZ-004.3",
+        "AC-QUIZ-004.4",
+        "AC-QUIZ-004.5"
+      ],
+      "verified_criteria": [
+        "AC-QUIZ-004.1",
+        "AC-QUIZ-004.2",
+        "AC-QUIZ-004.3",
+        "AC-QUIZ-004.4",
+        "AC-QUIZ-004.5"
+      ],
+      "implementation_files": [
+        "src/config.py",
+        "src/core/quiz_parser.py",
+        "src/ui/admin_handlers.py",
+        "src/ui/gradio_app.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
       "requirement_id": "PRIV-001",
       "title": "Student PII Redaction and Custom Detectors",
       "spec_file": "specs/core/telemetry_privacy.md",
@@ -429,6 +485,26 @@
         "src/ui/event_cards.py",
         "src/ui/gradio_app.py",
         "src/ui/qr_generator.py"
+      ],
+      "status": "VERIFIED"
+    },
+    {
+      "requirement_id": "ADMIN-002",
+      "title": "Instructor Authentication Recovery and Quiz Bank Isolation",
+      "spec_file": "specs/ui/instructor_admin.md",
+      "is_planned": false,
+      "sha256": "ed46c68f9d13fe1b8a46627213cee2323756fc4927eeb16444834b9c13b2771e",
+      "verified_sha256": "ed46c68f9d13fe1b8a46627213cee2323756fc4927eeb16444834b9c13b2771e",
+      "acceptance_criteria": [
+        "AC-ADMIN-002.1",
+        "AC-ADMIN-002.2"
+      ],
+      "verified_criteria": [
+        "AC-ADMIN-002.1",
+        "AC-ADMIN-002.2"
+      ],
+      "implementation_files": [
+        "src/ui/gradio_app.py"
       ],
       "status": "VERIFIED"
     },
@@ -536,17 +612,19 @@
       "title": "Event Cards, Interactive Quiz Pills and Gradio Layout",
       "spec_file": "specs/ui/theme_and_cards.md",
       "is_planned": false,
-      "sha256": "8b84b6d96d1f23c683f93939b10f555eb9320ac0adeead67812cb0fb806f200b",
-      "verified_sha256": "8b84b6d96d1f23c683f93939b10f555eb9320ac0adeead67812cb0fb806f200b",
+      "sha256": "9244575d54624cdcf5a85c336713e3e58e2d1a74b7b9b9be02f365419c181c40",
+      "verified_sha256": "9244575d54624cdcf5a85c336713e3e58e2d1a74b7b9b9be02f365419c181c40",
       "acceptance_criteria": [
         "AC-UI-005.1",
         "AC-UI-005.2",
-        "AC-UI-005.3"
+        "AC-UI-005.3",
+        "AC-UI-005.4"
       ],
       "verified_criteria": [
         "AC-UI-005.1",
         "AC-UI-005.2",
-        "AC-UI-005.3"
+        "AC-UI-005.3",
+        "AC-UI-005.4"
       ],
       "implementation_files": [
         "src/chatbot.py",

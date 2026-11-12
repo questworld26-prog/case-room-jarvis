@@ -21,6 +21,7 @@ High-Speed Cleaned Text Engine with Glowing System Event Mode Cards & Robust Mul
 import asyncio
 import random
 import re
+import sys
 import time
 import traceback
 from pathlib import Path
@@ -28,7 +29,7 @@ from pathlib import Path
 import gradio as gr
 from google.genai import types
 
-from config import PRE_AUTHORED_QUIZ_BANKS, app_state
+from config import app_state, get_case_quiz_bank
 from core.cache_manager import get_genai_client, get_or_create_cache
 from core.dialogue_utils import (
     build_clean_gemini_contents,
@@ -106,14 +107,7 @@ STATIC_ROOT = (Path(__file__).resolve().parent.parent / "static").resolve()
 
 
 def _resolve_quiz_bank() -> list:
-    case_key = app_state.active_case_study or "EcoBrew"
-    bank = PRE_AUTHORED_QUIZ_BANKS.get(case_key, [])
-    if bank:
-        return bank
-    return next(
-        (val for key, val in PRE_AUTHORED_QUIZ_BANKS.items() if key.lower() == case_key.lower()),
-        [],
-    )
+    return get_case_quiz_bank(app_state.active_case_study)
 
 
 def _was_q1_shown_in_history(q_idx: int, history: list) -> bool:
@@ -540,6 +534,11 @@ def launch_app(share: bool = True):
     print("🚀 CLASSROOM CHATBOT IS LIVE!")
     print(f"🔗 URL for Students: {target_url}")
     print("=" * 60 + "\n")
+    from core.quiz_parser import collect_case_setup_errors, format_quiz_startup_alert
+
+    startup_quiz_alert = format_quiz_startup_alert(collect_case_setup_errors())
+    if startup_quiz_alert:
+        print(startup_quiz_alert + "\n", file=sys.stderr, flush=True)
     generate_qr_code(target_url)
 
 

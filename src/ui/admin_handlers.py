@@ -59,6 +59,7 @@ def set_pending_mode(new_mode):
 
 
 # [spec: ADMIN-001]
+# [spec: QUIZ-004]
 def confirm_mode_broadcast():
     """Confirm and broadcast the staged mode change to all connected students."""
     if getattr(app_state, "_has_staged_mode", False) and getattr(app_state, "pending_mode", None):
@@ -66,6 +67,7 @@ def confirm_mode_broadcast():
         app_state._has_staged_mode = False
     else:
         app_state.pending_mode = app_state.active_mode
+    app_state.reload_case_quiz_banks()
     app_state.notify_mode_change()
     mode_name = app_state.get_mode_display_name()
     return f"✅ **{mode_name}** is now live for all students!"
@@ -104,11 +106,21 @@ def update_ttl(new_ttl):
 
 
 # [spec: ADMIN-001]
+# [spec: CACHE-003]
+# [spec: QUIZ-004]
 def refresh_cache_action():
     try:
         case = app_state.active_case_study or "EcoBrew"
         get_or_create_cache(case, force_refresh=True, ttl=app_state.cache_ttl)
+        app_state.reload_case_quiz_banks()
         app_state.notify_mode_change()
+        if not (app_state.case_text_context or "").strip():
+            app_state.active_cache_name = None
+            app_state.cache_info = {}
+            return (
+                f"❌ **Case Context Incomplete for '{case}'**: Loaded **0 characters** of clean case text "
+                f"(no readable PDFs, exhibits, or `extracted_context.txt` found in `resource/{case}/`)."
+            )
         cache_msg = ""
         if app_state.active_cache_name:
             cache_msg = f" | ⚡ **Gemini Context Cache ACTIVE** ({app_state.active_cache_name[-18:]}, TTL: {app_state.cache_ttl})"

@@ -11,3 +11,11 @@ Acceptance Criteria:
 - AC-ADMIN-001.4: When authenticating admin credentials or rendering HTML cards, the application shall verify passwords using constant-time comparison and escape untrusted HTML strings.
 - AC-ADMIN-001.5: When a client requests a file from the static fallback endpoint, the server shall resolve the target path and block any path outside `static`.
 
+## ADMIN-002: Instructor Authentication Recovery and Quiz Bank Isolation
+
+The instructor admin panel shall preserve authentication recovery after invalid password attempts and render the quiz bank inside a dedicated inspection container.
+
+Acceptance Criteria:
+- AC-ADMIN-002.1: When an invalid instructor password is submitted, the authentication handler shall skip visibility updates on unmounted control panels so a subsequent valid password reveals all admin controls cleanly.
+- AC-ADMIN-002.2: When an instructor selects or loads a case study, the admin console shall render verified quiz bank questions and highlighted answer keys in a standalone quiz preview section.
+

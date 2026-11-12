@@ -3,9 +3,10 @@ CLI Pre-Flight Quiz Bank Linter and Diagnostic Validator.
 Validates case study markdown quiz banks against pedagogical and schema rules before class.
 
 Usage:
-    uv run python -m tools.validate_quiz
-    uv run python -m tools.validate_quiz --case EcoBrew
-    uv run python -m tools.validate_quiz --case EcoBrew --strict
+    uv run python src/tools/validate_quiz.py
+    uv run python src/tools/validate_quiz.py --case EcoBrew
+    uv run python src/tools/validate_quiz.py --case EcoBrew --strict
+    PYTHONPATH=src uv run python -m tools.validate_quiz --case EcoBrew
 
 [spec: QUIZ-003]
 """

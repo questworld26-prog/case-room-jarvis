@@ -22,7 +22,7 @@ import re
 
 from google.genai import types
 
-from config import PRE_AUTHORED_QUIZ_BANKS, app_state, format_quiz_question_prompt
+from config import app_state, format_quiz_question_prompt, get_case_quiz_bank
 from core.cache_manager import get_genai_client
 
 
@@ -142,13 +142,7 @@ def parse_quiz_state_from_history(history: list, extract_text_fn) -> tuple[bool,
     scores: list = []
     missed_concepts: list = []
 
-    case_key_check = app_state.active_case_study or "EcoBrew"
-    quiz_bank_check = PRE_AUTHORED_QUIZ_BANKS.get(case_key_check, [])
-    if not quiz_bank_check:
-        quiz_bank_check = next(
-            (bv for bk, bv in PRE_AUTHORED_QUIZ_BANKS.items() if bk.lower() == case_key_check.lower()),
-            [],
-        )
+    quiz_bank_check = get_case_quiz_bank(app_state.active_case_study)
 
     for h_turn in history:
         turn_text = extract_text_fn(

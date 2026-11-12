@@ -4,6 +4,23 @@ All notable changes to Case-Room are documented in this file.
 
 ---
 
+## [0.9.0] — 2026-11-12
+
+### Added
+- **Startup & Admin Case/Quiz Diagnostics (`CACHE-003`, `QUIZ-004`)**: Added bordered terminal and high-contrast Admin Panel alerts for invalid `quiz.md` files and empty/incomplete case folders missing source materials or `quiz.md`.
+- **Quiz Bank Section & MCQ Answer Highlighting (`ADMIN-002`)**: Separated the Admin Quiz Bank preview into its own collapsible section with `✓ Correct Answer` MCQ highlighting.
+- **Strict Quiz Edge-Case Validation**: Extended `validate_quiz_file` to catch duplicate question numbers, empty prompts, unrecognized types, duplicate/invalid A–D letters, blank option text, and empty official answers.
+
+### Fixed
+- **Admin Unlock & Live Quiz Synchronization**: Fixed Admin Panel recovery after an incorrect password (`gr.skip()`), cleared resolved top alerts on reload/broadcast, and mutated `PRE_AUTHORED_QUIZ_BANKS` in-place so student chatroom sessions see repaired quiz banks without restarting.
+- **Light Mode Surface Parity (`UI-005`)**: Added consistent light slate canvas (`#E8EEF5`) and admin surface styling matching dark mode, plus clean text-wrapping layout for multi-line error alerts.
+- **Empty Folder Handling**: Prevented duplicate empty extraction scans, stopped locking sessions on 0-char case loads, and cleared stale active context caches.
+
+### Changed
+- **Documentation**: Fixed `src/tools/validate_quiz.py` command paths in `docs/ADDING_A_CASE_STUDY.md` and `docs/TROUBLESHOOTING.md`, and added a Troubleshooting cross-reference table in `docs/ADDING_A_CASE_STUDY.md`.
+
+---
+
 ## [0.8.0] — 2026-11-12
 
 ### Added

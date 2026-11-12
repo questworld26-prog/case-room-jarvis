@@ -8,6 +8,7 @@ Case-Room can run any case study you have as PDFs. This guide shows you how to a
 - [Step 3: Run the preprocessor](#step-3-run-the-preprocessor)
 - [Step 4 (optional): Write a quiz for the case](#step-4-optional-write-a-quiz-for-the-case)
 - [Step 5: Load it in class](#step-5-load-it-in-class)
+- [Troubleshooting](#troubleshooting)
 - [Making answers more accurate](#making-answers-more-accurate)
 - [Customising the starter buttons](#customising-the-starter-buttons)
 - [Copyright and public repositories](#copyright-and-public-repositories)
@@ -150,10 +151,12 @@ Evaluate whether the price cuts strengthened or weakened Tesla's long-term brand
 To make sure your markdown quiz has zero formatting or checkbox errors before teaching, run the built-in validator from your terminal:
 
 ```bash
-uv run python -m tools.validate_quiz --case TeslaPricing
+uv run python src/tools/validate_quiz.py --case TeslaPricing
 ```
 
-You can also view the **"🎯 Case Study Quiz Bank & Live Card Preview"** accordion in the Instructor Admin Panel to verify the `🟢 Quiz Ready` badge and preview the interactive student buttons.
+*(If running as a module with `-m`, include `PYTHONPATH=src`: `PYTHONPATH=src uv run python -m tools.validate_quiz --case TeslaPricing`.)*
+
+You can also view the **"🎯 Case Study Quiz Bank"** section in the Instructor Admin Panel to verify the `🟢 Quiz Ready` badge and preview the interactive student buttons.
 
 ---
 
@@ -163,6 +166,20 @@ You can also view the **"🎯 Case Study Quiz Bank & Live Card Preview"** accord
 2. Open the **🔐 Instructor Admin Panel**. Your case now appears under **Available Case Studies**.
 3. Select it and click **🚀 Load Selected Case Study**.
 4. Test it yourself with a few questions before class, including one whose answer you know is *not* in the case. Jarvis should say the case doesn't cover it.
+
+---
+
+## Troubleshooting
+
+If a startup banner, Admin Panel alert, or student warning flags an issue with your case folder, follow the matching section in [docs/TROUBLESHOOTING.md](TROUBLESHOOTING.md):
+
+| Issue You See | Which Troubleshooting Point to Follow |
+| :--- | :--- |
+| New case folder doesn't show up in the Admin Panel list | [My new case study doesn't appear in the list](TROUBLESHOOTING.md#my-new-case-study-doesnt-appear-in-the-list) — verify the folder sits directly under `resource/` and restart Case-Room. |
+| `"No readable case materials"` or `"⚠️ Warning: No PDF files found"` | ["⚠️ Warning: No PDF files found"](TROUBLESHOOTING.md#-warning-no-pdf-files-found) — confirm `.pdf` files are placed directly inside `resource/<YourCase>/` and run Step 3. |
+| Case loaded 0 chars or `extracted_context.txt` is empty/garbled | [`extracted_context.txt` is empty or gibberish](TROUBLESHOOTING.md#extracted_contexttxt-is-empty-or-gibberish) — run OCR (e.g., Adobe Acrobat *Scan & OCR*) on scanned PDFs, then re-run Step 3. |
+| `"Missing quiz bank"` or Quiz Mode uses AI-generated questions | [Quiz mode uses AI-generated questions instead of mine](TROUBLESHOOTING.md#quiz-mode-uses-ai-generated-questions-instead-of-mine) — name the file `resource/<YourCase>/quiz.md` (Step 4) and run `validate_quiz.py`. |
+| Students see `"⚠️ No Case Study Selected"` after launch | [Students see "⚠️ No Case Study Selected"](TROUBLESHOOTING.md#students-see-%EF%B8%8F-no-case-study-selected) — select the case in the Admin Panel and click **🚀 Load Selected Case Study**. |
 
 ---
 

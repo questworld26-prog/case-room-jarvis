@@ -152,8 +152,8 @@ The PDF is probably a scanned image. Run it through OCR, for example Adobe Acrob
 
 ### Quiz mode uses AI-generated questions instead of mine
 - The quiz file must be named `quiz.md` directly inside your case folder, e.g. `resource/TeslaPricing/quiz.md`.
-- Run `uv run python -m tools.validate_quiz --case TeslaPricing` in your terminal to see if any headings, checkboxes, or answers have syntax errors.
-- Click **"🎯 Case Study Quiz Bank & Live Card Preview"** in the Admin panel to check that your questions display properly.
+- Run `uv run python src/tools/validate_quiz.py --case TeslaPricing` in your terminal to see if any headings, checkboxes, or answers have syntax errors.
+- Check the **"🎯 Case Study Quiz Bank"** section in the Admin panel to check that your questions display properly.
 
 ---
 

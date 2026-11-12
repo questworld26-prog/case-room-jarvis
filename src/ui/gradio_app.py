@@ -17,6 +17,7 @@ Gradio Blocks application layout and interactive component wiring for Jarvis Cha
 Separates UI component assembly from the core streaming chat engine.
 """
 
+import html
 from collections.abc import Callable
 from pathlib import Path
 
@@ -24,7 +25,7 @@ import gradio as gr
 
 from config import app_state, get_available_case_studies
 from core.cache_manager import get_or_create_cache
-from core.quiz_parser import get_quiz_validation_status
+from core.quiz_parser import collect_case_setup_errors, get_quiz_validation_status
 from ui.admin_handlers import (
     add_custom_fw,
     confirm_mode_broadcast,
@@ -38,6 +39,53 @@ from ui.admin_handlers import (
     verify_admin_password,
 )
 from ui.ui_theme import CLIENT_HERO_HTML, DEMO_LOAD_JS, get_instant_greeting
+
+RESOURCE_ROOT = Path(__file__).resolve().parent.parent.parent / "resource"
+
+
+# [spec: CACHE-003]
+# [spec: QUIZ-004]
+def _build_startup_quiz_alert_html() -> str:
+    """Render a prominent pre-auth alert callout in Admin Tab for incomplete case folders or invalid quiz banks."""
+    failures = collect_case_setup_errors(RESOURCE_ROOT)
+    if not failures:
+        return ""
+    sections = []
+    for entry in failures:
+        safe_case = html.escape(str(entry["case_name"]))
+        safe_path = html.escape(str(entry["quiz_path"]))
+        err_items = "".join(f"<li>{html.escape(str(e))}</li>" for e in entry.get("errors", []))
+        remediations = entry.get("remediations") or [
+            f"uv run python src/tools/validate_quiz.py --case {entry['case_name']}",
+        ]
+        rem_parts = []
+        for cmd in remediations:
+            if cmd == "See docs/ADDING_A_CASE_STUDY.md":
+                rem_parts.append(
+                    '<div class="quiz-bank-remediation">🔧 Remediation: See <code>docs/ADDING_A_CASE_STUDY.md</code></div>'
+                )
+            else:
+                rem_parts.append(
+                    f'<div class="quiz-bank-remediation">🔧 Remediation: <code>{html.escape(str(cmd))}</code></div>'
+                )
+        remediation_html = "".join(rem_parts)
+        sections.append(
+            '<div class="quiz-bank-alert-case">'
+            f'<div class="quiz-bank-alert-case-title">❌ <strong>{safe_case}</strong> '
+            f"(<code>{safe_path}</code> — {len(entry.get('errors', []))} issue(s))</div>"
+            f'<ul class="quiz-bank-errors">{err_items}</ul>'
+            f"{remediation_html}"
+            "</div>"
+        )
+    return (
+        '<div class="quiz-bank-alert-banner" role="alert">'
+        '<div class="quiz-bank-alert-header">'
+        '<span class="quiz-bank-status-pill is-error">🚨 Startup Case Study &amp; Quiz Validation Errors</span>'
+        '<span class="quiz-bank-alert-sub">Empty case folders block chat; Quiz Mode falls back to oral exam until fixed</span>'
+        "</div>"
+        f"{''.join(sections)}"
+        "</div>"
+    )
 
 
 # [spec: ADMIN-001]
@@ -194,38 +242,106 @@ def _build_student_tab(chat_fn: Callable) -> None:
 
 
 # [spec: QUIZ-003]
-def _render_admin_quiz_preview(case_name: str | None) -> str:
-    """Render markdown status and interactive HTML card previews for the admin inspection accordion."""
-    if not case_name:
-        return "*Select and load a case study above to inspect its quiz bank.*"
-    status = get_quiz_validation_status(case_name)
-    if not status["is_valid"]:
-        lines = [
-            f"### {status['badge']}",
-            f"> ⚠️ {status['alert_message']}",
-            "",
-            f"To enable curated Quiz Mode for **{case_name}**, create `resource/{case_name}/quiz.md`.",
-        ]
-        if status.get("errors"):
-            lines.append("\n**Validation Diagnostics:**")
-            for err in status["errors"]:
-                lines.append(f"- ❌ `{err}`")
-        return "\n".join(lines)
+def _render_quiz_question_item(q: dict, idx: int, is_open: bool) -> str:
+    """Render a single semantic <details>/<article> card for the Quiz Bank section."""
+    topic = html.escape(str(q.get("topic", f"Question {idx}")))
+    q_type = q.get("type", "mcq")
+    type_label = "MCQ" if q_type == "mcq" else "Open-Ended"
+    prompt_text = html.escape(str(q.get("prompt_text", "")))
+    correct_opt = str(q.get("correct_option", "")).strip().upper()
 
-    lines = [
-        f"### {status['badge']}",
-        f"Found **{status['total_questions']} verified questions** in `resource/{case_name}/quiz.md`.",
-        "",
-        "---",
-        "#### 👁️ Student Question Card Previews",
-    ]
-    for idx, card_html in enumerate(status["preview_cards"], start=1):
-        lines.append(f"\n<details open><summary><b>Question #{idx} Card</b></summary>\n\n{card_html}\n\n</details>")
-    return "\n".join(lines)
+    body_parts = [f'<p class="quiz-bank-prompt">{prompt_text}</p>']
+    if q_type == "mcq" and q.get("options"):
+        opt_html = []
+        for opt in q["options"]:
+            escaped_opt = html.escape(str(opt))
+            letter = str(opt)[0].upper() if len(str(opt)) >= 2 and str(opt)[1] == ")" else ""
+            is_correct = bool(letter and letter == correct_opt)
+            pill_cls = "quiz-opt-pill quiz-opt-pill-correct" if is_correct else "quiz-opt-pill"
+            badge_html = f"<strong>{html.escape(str(opt)[:2])}</strong> " if letter else ""
+            text_html = html.escape(str(opt)[2:].strip()) if letter else escaped_opt
+            correct_tag = '<span class="quiz-opt-correct-tag">✓ Correct Answer</span>' if is_correct else ""
+            opt_html.append(f'<div class="{pill_cls}">{badge_html}<span>{text_html}</span>{correct_tag}</div>')
+        body_parts.append(f'<div class="quiz-bank-options">{"".join(opt_html)}</div>')
+    elif q.get("rubric_key_points"):
+        pts = "".join(f"<li>{html.escape(str(pt))}</li>" for pt in q["rubric_key_points"])
+        body_parts.append(
+            f'<div class="quiz-bank-rubric"><strong>Answer Rubric Key Points:</strong><ul>{pts}</ul></div>'
+        )
+
+    footer_parts = []
+    if q.get("hint"):
+        footer_parts.append(f"<span><strong>Hint:</strong> {html.escape(str(q['hint']))}</span>")
+    if q.get("official_answer"):
+        footer_parts.append(f"<span><strong>Official Answer:</strong> {html.escape(str(q['official_answer']))}</span>")
+    footer_html = f'<footer class="quiz-bank-footer">{"".join(footer_parts)}</footer>' if footer_parts else ""
+
+    open_attr = " open" if is_open else ""
+    return (
+        f'<details class="quiz-bank-item"{open_attr}>'
+        f'<summary class="quiz-bank-summary">'
+        f'<span class="quiz-bank-qbadge">Q{idx}</span>'
+        f'<span class="quiz-bank-type-pill">{type_label}</span>'
+        f"<span>{topic}</span>"
+        f"</summary>"
+        f'<article class="quiz-bank-card">{"".join(body_parts)}{footer_html}</article>'
+        f"</details>"
+    )
+
+
+# [spec: QUIZ-003]
+# [spec: QUIZ-004]
+def _render_admin_quiz_preview(case_name: str | None) -> str:
+    """Render standalone Quiz Bank HTML section with status banner and collapsible question cards."""
+    if not case_name:
+        return (
+            '<div class="quiz-bank-section">'
+            '<div class="quiz-bank-banner">'
+            '<span class="quiz-bank-status-pill is-warning">⏳ No Case Loaded</span>'
+            '<span class="quiz-bank-source-meta">Select a case study above to inspect its quiz bank.</span>'
+            "</div></div>"
+        )
+
+    status = get_quiz_validation_status(case_name)
+    safe_case = html.escape(str(case_name))
+    badge = html.escape(str(status["badge"]))
+    source_meta = f'<span class="quiz-bank-source-meta">Source: <code>resource/{safe_case}/quiz.md</code></span>'
+
+    if not status["is_valid"]:
+        alert_msg = html.escape(str(status["alert_message"]))
+        is_missing = badge.startswith("⚠️")
+        err_items = "".join(f"<li>{html.escape(str(e))}</li>" for e in status.get("errors", []))
+        err_list = f'<ul class="quiz-bank-errors">{err_items}</ul>' if err_items else ""
+        if is_missing:
+            remediation = (
+                '<div class="quiz-bank-remediation">🔧 Remediation: See <code>docs/ADDING_A_CASE_STUDY.md</code></div>'
+            )
+        else:
+            remediation = (
+                '<div class="quiz-bank-remediation">🔧 Fix errors and verify: '
+                f"<code>uv run python src/tools/validate_quiz.py --case {safe_case}</code></div>"
+            )
+        return (
+            '<div class="quiz-bank-section is-error">'
+            f'<div class="quiz-bank-banner"><span class="quiz-bank-status-pill is-error">{badge}</span>{source_meta}</div>'
+            f'<p class="quiz-bank-error-lead">{alert_msg}</p>{err_list}{remediation}'
+            "</div>"
+        )
+
+    questions = status.get("questions", [])
+    items_html = "".join(_render_quiz_question_item(q, idx, idx == 1) for idx, q in enumerate(questions, start=1))
+    return (
+        '<div class="quiz-bank-section">'
+        f'<div class="quiz-bank-banner"><span class="quiz-bank-status-pill">{badge}</span>{source_meta}</div>'
+        f'<section class="quiz-bank-accordion" aria-label="Case Study Quiz Questions">{items_html}</section>'
+        "</div>"
+    )
 
 
 # [spec: ADMIN-001]
+# [spec: CACHE-003]
 # [spec: QUIZ-003]
+# [spec: QUIZ-004]
 def _load_selected_case_study(selected_case):
     if not selected_case:
         return (
@@ -233,18 +349,34 @@ def _load_selected_case_study(selected_case):
             gr.update(),
             get_admin_status(),
             _render_admin_quiz_preview(selected_case),
+            _build_startup_quiz_alert_html(),
         )
     app_state.active_case_study = selected_case
-    app_state.session_locked = True
     get_or_create_cache(selected_case, force_refresh=True, ttl=app_state.cache_ttl)
     app_state.reload_case_quiz_banks()
-    app_state.notify_mode_change()
-    cache_status_info = ""
-    if app_state.active_cache_name:
-        cache_status_info = (
-            f"\n\n⚡ **Gemini Context Cache ACTIVE** ({app_state.active_cache_name[-18:]}, TTL: {app_state.cache_ttl})"
+    has_case_text = bool((app_state.case_text_context or "").strip())
+
+    if has_case_text:
+        app_state.session_locked = True
+        app_state.notify_mode_change()
+        cache_status_info = ""
+        if app_state.active_cache_name:
+            cache_status_info = f"\n\n⚡ **Gemini Context Cache ACTIVE** ({app_state.active_cache_name[-18:]}, TTL: {app_state.cache_ttl})"
+        status = f"✅ Active Case Study set to: **{selected_case}** (Loaded {len(app_state.case_text_context):,} chars clean text context){cache_status_info}"
+        locked_input = gr.update(
+            interactive=False, label=f"🔒 Session ID (Locked — Class is Live: {app_state.session_id})"
         )
-    status = f"✅ Active Case Study set to: **{selected_case}** (Loaded {len(app_state.case_text_context):,} chars clean text context){cache_status_info}"
+    else:
+        app_state.session_locked = False
+        app_state.active_cache_name = None
+        app_state.cache_info = {}
+        status = (
+            f"❌ **Case Study Incomplete: {selected_case}** (Loaded 0 chars clean text context — "
+            f"no readable PDFs, exhibits, or `extracted_context.txt` found in `resource/{selected_case}/`). "
+            "Student Chatroom will remain blocked until case documents are added and reloaded."
+        )
+        locked_input = gr.update()
+
     quiz_val = get_quiz_validation_status(selected_case)
     if quiz_val["is_valid"]:
         status += f"\n\n{quiz_val['badge']}"
@@ -253,27 +385,47 @@ def _load_selected_case_study(selected_case):
             f"\n\n⚠️ **No verified quiz bank found for this case ({quiz_val['badge']}).** "
             f"Add or fix questions in `resource/{selected_case}/quiz.md` before running Quiz Mode."
         )
-    locked_input = gr.update(interactive=False, label=f"🔒 Session ID (Locked — Class is Live: {app_state.session_id})")
-    return status, locked_input, get_admin_status(), _render_admin_quiz_preview(selected_case)
-
-
-def _unlock_admin_panel(input_password):
-    if verify_admin_password(input_password):
-        return (
-            gr.update(open=True, visible=True),
-            "🔓 **Instructor controls unlocked successfully!**",
-            gr.update(visible=False),
-            get_admin_status(),
-        )
     return (
-        gr.update(open=False, visible=False),
-        "❌ **Incorrect password. Access denied.**",
-        gr.update(visible=True),
+        status,
+        locked_input,
         get_admin_status(),
+        _render_admin_quiz_preview(selected_case),
+        _build_startup_quiz_alert_html(),
     )
 
 
-def _build_admin_mode_and_framework_controls(admin_summary_banner: gr.Markdown) -> None:
+# [spec: ADMIN-001]
+# [spec: ADMIN-002]
+def _unlock_admin_panel(input_password):
+    if verify_admin_password(input_password):
+        return (
+            gr.update(visible=True),
+            "🔓 **Instructor controls unlocked successfully!**",
+            gr.update(visible=False),
+            get_admin_status(),
+            gr.update(active=True),
+        )
+    # Skip updates on unmounted panels/timer so Gradio's pre-mount cache cannot replay stale hide state on retry
+    return (
+        gr.skip(),
+        "❌ **Incorrect password. Access denied.**",
+        gr.skip(),
+        gr.skip(),
+        gr.skip(),
+    )
+
+
+# [spec: ADMIN-001]
+def _refresh_dashboard_if_unlocked(input_password):
+    if verify_admin_password(input_password):
+        return generate_live_dashboard_data()
+    return gr.skip(), gr.skip(), gr.skip()
+
+
+def _build_admin_mode_and_framework_controls(
+    admin_summary_banner: gr.Markdown,
+    admin_startup_quiz_alert: gr.HTML,
+) -> None:
     """Build classroom mode radio, broadcast button, and custom framework controls."""
     gr.Markdown("## Classroom Mode & Configuration Controls")
     gr.Markdown(
@@ -295,6 +447,11 @@ def _build_admin_mode_and_framework_controls(admin_summary_banner: gr.Markdown) 
             broadcast_btn.click(
                 fn=lambda: (confirm_mode_broadcast(), get_admin_status())[1],
                 outputs=admin_summary_banner,
+            ).then(
+                fn=_build_startup_quiz_alert_html,
+                outputs=admin_startup_quiz_alert,
+                queue=False,
+                show_progress="hidden",
             )
 
         with gr.Column(scale=1, visible=app_state.has_framework_modes()):
@@ -328,7 +485,8 @@ def _build_admin_system_settings(
     case_study_radio: gr.Radio,
     case_status_msg: gr.Markdown,
     admin_summary_banner: gr.Markdown,
-    quiz_preview_md: gr.Markdown,
+    quiz_preview_html: gr.HTML,
+    admin_startup_quiz_alert: gr.HTML,
 ) -> gr.Image:
     """Build TTL, Model ID, Session ID, cache reload, and QR code controls."""
     gr.Markdown("---")
@@ -358,11 +516,22 @@ def _build_admin_system_settings(
             load_case_btn.click(
                 fn=_load_selected_case_study,
                 inputs=case_study_radio,
-                outputs=[case_status_msg, session_id_input, admin_summary_banner, quiz_preview_md],
+                outputs=[
+                    case_status_msg,
+                    session_id_input,
+                    admin_summary_banner,
+                    quiz_preview_html,
+                    admin_startup_quiz_alert,
+                ],
             )
             refresh_btn = gr.Button("🔄 Reload Case Text Context", variant="primary")
             refresh_status = gr.Markdown()
-            refresh_btn.click(fn=refresh_cache_action, outputs=refresh_status)
+            refresh_btn.click(fn=refresh_cache_action, outputs=refresh_status).then(
+                fn=_build_startup_quiz_alert_html,
+                outputs=admin_startup_quiz_alert,
+                queue=False,
+                show_progress="hidden",
+            )
 
         with gr.Column():
             gr.Markdown("### Classroom Projection QR Code")
@@ -378,7 +547,11 @@ def _build_admin_tab() -> gr.Image:
     """Construct Tab 2: Password-Protected Instructor Admin Panel."""
     with gr.TabItem("🔐 Instructor Admin Panel"):
         gr.Markdown("## 🔐 Instructor Authentication & Case Management")
-        with gr.Row() as admin_auth_row:
+        admin_startup_quiz_alert = gr.HTML(
+            value=_build_startup_quiz_alert_html,
+            elem_id="admin-startup-quiz-alert",
+        )
+        with gr.Row(elem_id="admin-auth-row") as admin_auth_row:
             admin_pass_box = gr.Textbox(
                 label="Enter Instructor Password",
                 type="password",
@@ -388,7 +561,7 @@ def _build_admin_tab() -> gr.Image:
             admin_unlock_btn = gr.Button("Unlock Admin Controls", variant="primary", scale=1)
         admin_auth_status = gr.Markdown("🔒 Enter instructor password to unlock controls.")
 
-        with gr.Accordion("⚙️ Instructor Control Center", open=False, visible=False) as admin_content_panel:
+        with gr.Column(visible=False, elem_id="admin-control-center") as admin_content_panel:
             admin_summary_banner = gr.Markdown(value=get_admin_status())
             gr.Markdown("## 📚 Business Case Study Selection")
             gr.Markdown(
@@ -405,14 +578,21 @@ def _build_admin_tab() -> gr.Image:
             case_status_msg = gr.Markdown(
                 value=f"Active Case Study: **{app_state.active_case_study or 'Not Initialized (Select and click Load)'}**"
             )
-            with gr.Accordion("🎯 Case Study Quiz Bank & Live Card Preview", open=False):
-                quiz_preview_md = gr.Markdown(value=_render_admin_quiz_preview(app_state.active_case_study))
 
-            case_study_radio.change(
-                fn=_render_admin_quiz_preview,
-                inputs=case_study_radio,
-                outputs=quiz_preview_md,
+            gr.Markdown("---")
+            gr.Markdown("## 🎯 Case Study Quiz Bank")
+            gr.Markdown(
+                "Inspect verified assessment questions, answer keys, and student card previews from the selected case study's `quiz.md` before starting Quiz Mode."
             )
+            quiz_preview_html = gr.HTML(value=_render_admin_quiz_preview(app_state.active_case_study))
+            case_study_radio.change(
+                fn=lambda sc: (_render_admin_quiz_preview(sc), _build_startup_quiz_alert_html()),
+                inputs=case_study_radio,
+                outputs=[quiz_preview_html, admin_startup_quiz_alert],
+                queue=False,
+                show_progress="hidden",
+            )
+
             gr.Markdown("---")
             gr.Markdown("## 📊 Live Class Dashboard")
             live_student_count = gr.Markdown(
@@ -421,27 +601,49 @@ def _build_admin_tab() -> gr.Image:
             with gr.Row():
                 live_activity_plot = gr.Plot(label="📈 Student Activity Timeline (Messages / Min)", scale=1)
                 live_latency_plot = gr.Plot(label="⚡ Response Latency Tracker (Seconds)", scale=1)
-            dashboard_timer = gr.Timer(value=10.0)
-            dashboard_timer.tick(
-                fn=generate_live_dashboard_data,
-                outputs=[live_student_count, live_activity_plot, live_latency_plot],
-            )
             gr.Markdown("---")
-            _build_admin_mode_and_framework_controls(admin_summary_banner)
+            _build_admin_mode_and_framework_controls(admin_summary_banner, admin_startup_quiz_alert)
             qr_image = _build_admin_system_settings(
-                load_case_btn, case_study_radio, case_status_msg, admin_summary_banner, quiz_preview_md
+                load_case_btn,
+                case_study_radio,
+                case_status_msg,
+                admin_summary_banner,
+                quiz_preview_html,
+                admin_startup_quiz_alert,
             )
 
-        admin_unlock_btn.click(
-            fn=_unlock_admin_panel,
-            inputs=admin_pass_box,
-            outputs=[admin_content_panel, admin_auth_status, admin_auth_row, admin_summary_banner],
+        dashboard_timer = gr.Timer(value=10.0, active=False)
+        dashboard_timer.tick(
+            fn=generate_live_dashboard_data,
+            outputs=[live_student_count, live_activity_plot, live_latency_plot],
         )
-        admin_pass_box.submit(
-            fn=_unlock_admin_panel,
-            inputs=admin_pass_box,
-            outputs=[admin_content_panel, admin_auth_status, admin_auth_row, admin_summary_banner],
-        )
+
+        unlock_outputs = [
+            admin_content_panel,
+            admin_auth_status,
+            admin_auth_row,
+            admin_summary_banner,
+            dashboard_timer,
+        ]
+        dashboard_outputs = [live_student_count, live_activity_plot, live_latency_plot]
+        for trigger in (admin_unlock_btn.click, admin_pass_box.submit):
+            trigger(
+                fn=_unlock_admin_panel,
+                inputs=admin_pass_box,
+                outputs=unlock_outputs,
+                queue=False,
+                show_progress="hidden",
+            ).then(
+                fn=_refresh_dashboard_if_unlocked,
+                inputs=admin_pass_box,
+                outputs=dashboard_outputs,
+                show_progress="hidden",
+            ).then(
+                fn=_build_startup_quiz_alert_html,
+                outputs=admin_startup_quiz_alert,
+                queue=False,
+                show_progress="hidden",
+            )
     return qr_image
 
 

@@ -6,8 +6,9 @@ Dark Theme comprehensive CSS overrides for Gradio containers, tables, inputs, ch
 
 CSS_DARK_THEME = """
 /* Complete, harmonious Gemini Dark Mode */
-html.dark, body.dark, .gradio-container.dark, [data-theme='dark'] {
+html.dark, body.dark, gradio-app.dark, html.dark gradio-app, .gradio-container.dark, [data-theme='dark'] {
     background-color: #131314 !important;
+    background-image: none !important;
     color: #E3E3E3 !important;
 }
 
@@ -596,5 +597,120 @@ body.dark .classroom-footer,
 .gradio-container.dark .classroom-footer {
     border-top-color: #2D2F31 !important;
     color: #9AA0A6 !important;
+}
+html.dark .quiz-bank-section,
+body.dark .quiz-bank-section,
+.gradio-container.dark .quiz-bank-section,
+[data-theme='dark'] .quiz-bank-section {
+    background: #18191B !important;
+    border-color: #3C4043 !important;
+}
+html.dark details.quiz-bank-item,
+body.dark details.quiz-bank-item,
+.gradio-container.dark details.quiz-bank-item,
+[data-theme='dark'] details.quiz-bank-item {
+    background: #131314 !important;
+    border-color: #3C4043 !important;
+}
+html.dark summary.quiz-bank-summary:hover,
+body.dark summary.quiz-bank-summary:hover,
+.gradio-container.dark summary.quiz-bank-summary:hover,
+[data-theme='dark'] summary.quiz-bank-summary:hover {
+    background: #2D2F31 !important;
+}
+html.dark article.quiz-bank-card,
+body.dark article.quiz-bank-card,
+.gradio-container.dark article.quiz-bank-card,
+[data-theme='dark'] article.quiz-bank-card {
+    background: #1E1F20 !important;
+    border-top-color: #3C4043 !important;
+}
+html.dark .quiz-bank-options .quiz-opt-pill.quiz-opt-pill-correct,
+body.dark .quiz-bank-options .quiz-opt-pill.quiz-opt-pill-correct,
+.gradio-container.dark .quiz-bank-options .quiz-opt-pill.quiz-opt-pill-correct,
+[data-theme='dark'] .quiz-bank-options .quiz-opt-pill.quiz-opt-pill-correct,
+html.dark .quiz-bank-options .quiz-opt-pill.quiz-opt-pill-correct:hover,
+body.dark .quiz-bank-options .quiz-opt-pill.quiz-opt-pill-correct:hover,
+.gradio-container.dark .quiz-bank-options .quiz-opt-pill.quiz-opt-pill-correct:hover,
+[data-theme='dark'] .quiz-bank-options .quiz-opt-pill.quiz-opt-pill-correct:hover {
+    background: #064E3B !important;
+    border: 2px solid #10B981 !important;
+    color: #ECFDF5 !important;
+    font-weight: 600 !important;
+    box-shadow: inset 4px 0 0 #34D399, 0 2px 8px rgba(16, 185, 129, 0.18) !important;
+}
+html.dark .quiz-bank-options .quiz-opt-pill.quiz-opt-pill-correct strong,
+body.dark .quiz-bank-options .quiz-opt-pill.quiz-opt-pill-correct strong,
+.gradio-container.dark .quiz-bank-options .quiz-opt-pill.quiz-opt-pill-correct strong,
+[data-theme='dark'] .quiz-bank-options .quiz-opt-pill.quiz-opt-pill-correct strong {
+    color: #34D399 !important;
+}
+html.dark .quiz-opt-correct-tag,
+body.dark .quiz-opt-correct-tag,
+.gradio-container.dark .quiz-opt-correct-tag,
+[data-theme='dark'] .quiz-opt-correct-tag {
+    background: #047857 !important;
+    color: #ECFDF5 !important;
+    border: 1px solid #34D399 !important;
+}
+html.dark .quiz-bank-alert-banner,
+body.dark .quiz-bank-alert-banner,
+.gradio-container.dark .quiz-bank-alert-banner,
+[data-theme='dark'] .quiz-bank-alert-banner,
+html.dark .quiz-bank-section.is-error,
+body.dark .quiz-bank-section.is-error,
+.gradio-container.dark .quiz-bank-section.is-error,
+[data-theme='dark'] .quiz-bank-section.is-error {
+    background: #2C1215 !important;
+    border: 2px solid #EF4444 !important;
+    border-left: 6px solid #F87171 !important;
+    color: #FEE2E2 !important;
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.22) !important;
+}
+html.dark .quiz-bank-status-pill.is-error,
+body.dark .quiz-bank-status-pill.is-error,
+.gradio-container.dark .quiz-bank-status-pill.is-error,
+[data-theme='dark'] .quiz-bank-status-pill.is-error {
+    background: #DC2626 !important;
+    border-color: #F87171 !important;
+    color: #FFFFFF !important;
+}
+html.dark .quiz-bank-alert-sub,
+body.dark .quiz-bank-alert-sub,
+.gradio-container.dark .quiz-bank-alert-sub,
+[data-theme='dark'] .quiz-bank-alert-sub,
+html.dark .quiz-bank-error-lead,
+body.dark .quiz-bank-error-lead,
+.gradio-container.dark .quiz-bank-error-lead,
+[data-theme='dark'] .quiz-bank-error-lead,
+html.dark .quiz-bank-alert-case-title,
+body.dark .quiz-bank-alert-case-title,
+.gradio-container.dark .quiz-bank-alert-case-title,
+[data-theme='dark'] .quiz-bank-alert-case-title,
+html.dark .quiz-bank-errors,
+body.dark .quiz-bank-errors,
+.gradio-container.dark .quiz-bank-errors,
+[data-theme='dark'] .quiz-bank-errors,
+html.dark .quiz-bank-remediation,
+body.dark .quiz-bank-remediation,
+.gradio-container.dark .quiz-bank-remediation,
+[data-theme='dark'] .quiz-bank-remediation {
+    color: #FEE2E2 !important;
+}
+html.dark .quiz-bank-section.is-error .quiz-bank-errors code,
+body.dark .quiz-bank-section.is-error .quiz-bank-errors code,
+.gradio-container.dark .quiz-bank-section.is-error .quiz-bank-errors code,
+[data-theme='dark'] .quiz-bank-section.is-error .quiz-bank-errors code,
+html.dark .quiz-bank-alert-banner .quiz-bank-errors code,
+body.dark .quiz-bank-alert-banner .quiz-bank-errors code,
+.gradio-container.dark .quiz-bank-alert-banner .quiz-bank-errors code,
+[data-theme='dark'] .quiz-bank-alert-banner .quiz-bank-errors code,
+html.dark .quiz-bank-remediation code,
+body.dark .quiz-bank-remediation code,
+.gradio-container.dark .quiz-bank-remediation code,
+[data-theme='dark'] .quiz-bank-remediation code {
+    background: #450A0A !important;
+    border-color: #F87171 !important;
+    color: #FEE2E2 !important;
 }
 """

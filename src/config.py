@@ -73,6 +73,19 @@ def load_all_case_quiz_banks() -> dict[str, list]:
 PRE_AUTHORED_QUIZ_BANKS = load_all_case_quiz_banks()
 
 
+# [spec: QUIZ-004]
+def get_case_quiz_bank(case_name: str | None = None) -> list:
+    """Resolve the active pre-authored markdown quiz bank cleanly with case-insensitive lookup."""
+    case_key = case_name or app_state.active_case_study or "EcoBrew"
+    bank = PRE_AUTHORED_QUIZ_BANKS.get(case_key, [])
+    if bank:
+        return bank
+    return next(
+        (val for key, val in PRE_AUTHORED_QUIZ_BANKS.items() if key.lower() == case_key.lower()),
+        [],
+    )
+
+
 # [spec: QUIZ-001]
 def format_quiz_question_prompt(q_data: dict) -> str:
     """Format a quiz question item into a clean, markdown question card string."""
@@ -178,22 +191,21 @@ class AppState:
         """Return True if at least one registered mode plugin uses analytical frameworks."""
         return any(p.requires_framework for p in MODE_REGISTRY.values())
 
+    # [spec: QUIZ-004]
     def reload_case_quiz_banks(self) -> None:
-        """Reload all markdown quiz banks from disk into memory."""
-        global PRE_AUTHORED_QUIZ_BANKS
-        PRE_AUTHORED_QUIZ_BANKS = load_all_case_quiz_banks()
+        """Reload all markdown quiz banks from disk into memory in-place so all callers see updates."""
+        PRE_AUTHORED_QUIZ_BANKS.clear()
+        PRE_AUTHORED_QUIZ_BANKS.update(load_all_case_quiz_banks())
 
     def get_first_quiz_question(self, case_name: str = None) -> str:
         case = case_name or self.active_case_study or get_default_case_study()
-        if case in PRE_AUTHORED_QUIZ_BANKS and PRE_AUTHORED_QUIZ_BANKS[case]:
-            return format_quiz_question_prompt(PRE_AUTHORED_QUIZ_BANKS[case][0])
+        bank = get_case_quiz_bank(case)
+        if bank:
+            return format_quiz_question_prompt(bank[0])
         q = CASE_QUIZ_QUESTIONS.get(case)
         if q:
             return q
         case_lower = case.lower()
-        for bank_k, bank_v in PRE_AUTHORED_QUIZ_BANKS.items():
-            if bank_k.lower() == case_lower and bank_v:
-                return format_quiz_question_prompt(bank_v[0])
         for k, v in CASE_QUIZ_QUESTIONS.items():
             if k.lower() == case_lower:
                 return v

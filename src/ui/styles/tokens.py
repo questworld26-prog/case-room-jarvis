@@ -11,7 +11,15 @@ CSS_TOKENS = """
 /* Design System CSS Variables */
 :root {
     color-scheme: light dark;
-    --gemini-canvas-bg: #F1F5F9;
+    --gemini-canvas-bg: #E8EEF5;
+    --gemini-canvas-gradient: linear-gradient(180deg, #E2E9F3 0%, #EDF2F8 45%, #E6ECF5 100%);
+    --body-background-fill: var(--gemini-canvas-bg);
+    --background-fill-primary: #FFFFFF;
+    --background-fill-secondary: #F8FAFC;
+    --block-background-fill: #FFFFFF;
+    --panel-background-fill: #FFFFFF;
+    --block-border-color: #CBD5E1;
+    --border-color-primary: #CBD5E1;
     --gemini-text-main: #1F2937;
     --gemini-text-muted: #475569;
     --gemini-nav-bg: #FFFFFF;
@@ -60,7 +68,7 @@ CSS_TOKENS = """
     --gemini-prompt-placeholder: #64748B;
     --gemini-prompt-focus-border: #1A73E8;
     --gemini-prompt-focus-glow: rgba(26, 115, 232, 0.20);
-    --gemini-prompt-footer-grad: linear-gradient(180deg, rgba(241, 245, 249, 0) 0%, #F1F5F9 35%, #F1F5F9 100%);
+    --gemini-prompt-footer-grad: linear-gradient(180deg, rgba(232, 238, 245, 0) 0%, #E8EEF5 35%, #E8EEF5 100%);
 
     /* Event Cards, Wait Cards, Dividers & Quiz Accents */
     --gemini-card-bg: #FFFFFF;
@@ -95,6 +103,8 @@ body[data-theme='dark'],
 .dark {
     color-scheme: dark;
     --gemini-canvas-bg: #131314;
+    --gemini-canvas-gradient: none;
+    --body-background-fill: #131314;
     --gemini-text-main: #E3E3E3;
     --gemini-text-muted: #9AA0A6;
     --gemini-nav-bg: #1E1F20;

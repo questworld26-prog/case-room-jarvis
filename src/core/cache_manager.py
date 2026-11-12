@@ -27,6 +27,7 @@ from google import genai
 
 from config import app_state, get_default_case_study
 
+RESOURCE_ROOT = Path(__file__).resolve().parent.parent.parent / "resource"
 _GENAI_CLIENT_CACHE: dict[tuple[str, Any], genai.Client] = {}
 
 
@@ -52,7 +53,7 @@ def get_genai_client() -> genai.Client:
 def load_case_text_context(case_name: str | None = None) -> str:
     """Load clean preprocessed case text context from extracted_context.txt."""
     target_case = case_name or app_state.active_case_study or get_default_case_study()
-    root_resource = Path(__file__).resolve().parent.parent.parent / "resource"
+    root_resource = RESOURCE_ROOT
     resource_dir = root_resource / target_case
 
     if not resource_dir.exists():
@@ -145,7 +146,9 @@ def create_gemini_context_cache(case_name: str | None = None, ttl: str | None = 
     if not app_state.case_text_context or app_state.active_case_study != target_case:
         app_state.case_text_context = load_case_text_context(target_case)
 
-    if not app_state.case_text_context:
+    if not app_state.case_text_context or not app_state.case_text_context.strip():
+        app_state.active_cache_name = None
+        app_state.cache_info = {}
         print(f"⚠️ No text context available to cache for '{target_case}'.")
         return None
 
@@ -197,6 +200,7 @@ def create_gemini_context_cache(case_name: str | None = None, ttl: str | None = 
 
 
 # [spec: CACHE-002]
+# [spec: CACHE-003]
 # [spec: EVAL-001]
 def get_or_create_cache(
     case_name: str | None = None, force_refresh: bool = False, ttl: str | None = None
@@ -210,6 +214,12 @@ def get_or_create_cache(
 
     print(f"\nInitializing Case Study Knowledge: '{target_case}'...")
     app_state.case_text_context = load_case_text_context(target_case)
+
+    if not app_state.case_text_context or not app_state.case_text_context.strip():
+        app_state.active_cache_name = None
+        app_state.cache_info = {}
+        print(f"⚠️ No text context available to cache for '{target_case}'.")
+        return app_state.case_text_context
 
     # Attempt to prime Gemini Context Cache with configured TTL
     create_gemini_context_cache(target_case, ttl=ttl or app_state.cache_ttl)

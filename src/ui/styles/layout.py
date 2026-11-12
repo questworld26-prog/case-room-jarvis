@@ -6,16 +6,30 @@ Layout styles: Canvas, Navigation Header, Tabs, Hero Greeting, Student Name Inpu
 
 CSS_LAYOUT = """
 /* Clean, Airy Gemini Canvas */
-html, body {
+html, body, gradio-app {
     width: 100% !important;
     max-width: 100% !important;
     overflow-x: hidden !important;
     margin: 0 !important;
     padding: 0 !important;
     background-color: var(--gemini-canvas-bg) !important;
+    background-image: var(--gemini-canvas-gradient) !important;
+    background-attachment: fixed !important;
     color: var(--gemini-text-main) !important;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
     -webkit-font-smoothing: antialiased !important;
+}
+
+gradio-app {
+    min-height: 100vh !important;
+}
+
+.gradio-container,
+.gradio-container > .main,
+.gradio-container .tabs,
+.gradio-container .tabitem,
+.gradio-container .tab-wrapper {
+    background: transparent !important;
 }
 
 .gradio-container {
@@ -23,7 +37,6 @@ html, body {
     margin-left: auto !important;
     margin-right: auto !important;
     padding: 8px 18px 24px 18px !important;
-    background: transparent !important;
 }
 
 /* Gemini Top Navigation Bar */
@@ -500,6 +513,370 @@ body.dark .gemini-theme-toggle-btn .theme-icon-moon,
 .gradio-container.dark .gemini-theme-toggle-btn .theme-icon-moon,
 [data-theme='dark'] .gemini-theme-toggle-btn .theme-icon-moon {
     display: none;
+}
+
+/* ============================================================================
+ * Light Mode Admin Canvas & Elevated Card Surface Hierarchy (mirrors Dark Mode)
+ * ============================================================================ */
+html:not(.dark) button[role="tab"]:hover:not(.selected):not([aria-selected="true"]) {
+    background: rgba(255, 255, 255, 0.78) !important;
+    border-color: var(--gemini-card-border) !important;
+    color: var(--gemini-title-color) !important;
+}
+
+html:not(.dark) #admin-control-center .gradio-markdown,
+html:not(.dark) #admin-control-center .gradio-html,
+html:not(.dark) .tabitem > .gradio-markdown {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+html:not(.dark) :is(#admin-auth-row, #admin-control-center) :is(.gradio-textbox, .gradio-radio, .gradio-dropdown, .gradio-plot, .gradio-image, .gradio-accordion, fieldset.form) {
+    background: var(--gemini-card-bg) !important;
+    border: 1px solid var(--gemini-card-border) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
+}
+
+html:not(.dark) :is(#admin-auth-row, #admin-control-center) :is(input, textarea, select) {
+    background: var(--gemini-input-bg) !important;
+    border-color: var(--gemini-input-border) !important;
+    color: var(--gemini-input-text) !important;
+}
+
+/* ============================================================================
+ * Admin Quiz Bank Standalone Section, Accordion & Question Card Previews
+ * ============================================================================ */
+.quiz-bank-section {
+    background: var(--gemini-card-bg);
+    border: 1px solid var(--gemini-card-border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: var(--gemini-nav-shadow);
+    color: var(--gemini-card-body);
+}
+
+.quiz-bank-banner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--gemini-card-divider);
+}
+
+.quiz-bank-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--gemini-session-chip-bg);
+    border: 1px solid var(--gemini-session-chip-border);
+    color: var(--gemini-session-chip-color);
+}
+
+.quiz-bank-status-pill.is-warning {
+    background: var(--gemini-wait-bg);
+    border-color: var(--gemini-wait-border);
+    color: var(--gemini-wait-title);
+}
+
+.quiz-bank-source-meta {
+    font-size: 12.5px;
+    color: var(--gemini-text-muted);
+}
+
+.quiz-bank-source-meta code {
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: var(--gemini-case-chip-bg);
+    border: 1px solid var(--gemini-case-chip-border);
+    color: var(--gemini-case-chip-color);
+    font-size: 12px;
+}
+
+.quiz-bank-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+details.quiz-bank-item {
+    border: 1px solid var(--gemini-card-border);
+    border-radius: 12px;
+    background: var(--gemini-canvas-bg);
+    overflow: hidden;
+}
+
+summary.quiz-bank-summary {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 44px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gemini-card-title);
+    transition: background-color 0.16s ease;
+}
+
+summary.quiz-bank-summary::-webkit-details-marker {
+    display: none;
+}
+
+summary.quiz-bank-summary::before {
+    content: "";
+    inline-size: 1em;
+    block-size: 1em;
+    flex-shrink: 0;
+    background-color: currentColor;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z' clip-rule='evenodd'/%3E%3C/svg%3E") no-repeat center / contain;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z' clip-rule='evenodd'/%3E%3C/svg%3E") no-repeat center / contain;
+    rotate: -90deg;
+}
+
+details.quiz-bank-item[open] > summary.quiz-bank-summary::before {
+    rotate: 0deg;
+}
+
+summary.quiz-bank-summary:hover {
+    background: var(--gemini-pill-hover-bg);
+}
+
+summary.quiz-bank-summary:focus-visible {
+    outline: 2px solid var(--gemini-input-focus-border);
+    outline-offset: -2px;
+}
+
+details.quiz-bank-item::details-content {
+    interpolate-size: allow-keywords;
+    overflow: clip;
+    contain: layout;
+}
+
+details.quiz-bank-item:not([open])::details-content {
+    block-size: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    summary.quiz-bank-summary::before {
+        transition: rotate 0.2s ease;
+    }
+    details.quiz-bank-item::details-content {
+        transition: block-size, content-visibility, display;
+        transition-duration: 0.25s;
+        transition-timing-function: ease-in-out;
+        transition-behavior: allow-discrete;
+    }
+}
+
+.quiz-bank-qbadge {
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: var(--gemini-badge-bg);
+    border: 1px solid var(--gemini-badge-border);
+    color: var(--gemini-badge-color);
+}
+
+.quiz-bank-type-pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--gemini-mode-chip-bg);
+    border: 1px solid var(--gemini-mode-chip-border);
+    color: var(--gemini-mode-chip-color);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+article.quiz-bank-card {
+    background: var(--gemini-card-bg);
+    border-top: 1px solid var(--gemini-card-divider);
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.quiz-bank-prompt {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.55;
+    font-weight: 500;
+    color: var(--gemini-card-title);
+}
+
+.quiz-bank-options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.quiz-bank-options .quiz-opt-pill {
+    margin: 0 !important;
+    cursor: default !important;
+}
+
+.quiz-bank-options .quiz-opt-pill.quiz-opt-pill-correct,
+.quiz-bank-options .quiz-opt-pill.quiz-opt-pill-correct:hover {
+    border: 2px solid #059669 !important;
+    background: #ECFDF5 !important;
+    color: #064E3B !important;
+    font-weight: 600 !important;
+    box-shadow: inset 4px 0 0 #059669, 0 2px 6px rgba(5, 150, 105, 0.14) !important;
+}
+
+.quiz-bank-options .quiz-opt-pill.quiz-opt-pill-correct strong {
+    color: #047857 !important;
+}
+
+.quiz-opt-correct-tag {
+    margin-left: auto;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #047857;
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+.quiz-bank-rubric {
+    background: var(--gemini-canvas-bg);
+    border: 1px solid var(--gemini-card-divider);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--gemini-card-body);
+}
+
+.quiz-bank-rubric ul {
+    margin: 6px 0 0 0;
+    padding-left: 18px;
+}
+
+.quiz-bank-footer {
+    border-top: 1px solid var(--gemini-card-divider);
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--gemini-text-muted);
+}
+
+.quiz-bank-errors {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--gemini-wait-title);
+    font-size: 13px;
+}
+
+.quiz-bank-alert-banner,
+.quiz-bank-section.is-error {
+    background: #FEF2F2;
+    border: 2px solid #DC2626;
+    border-left: 6px solid #B91C1C;
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+    color: #7F1D1D;
+    box-shadow: 0 4px 14px rgba(185, 28, 28, 0.12);
+}
+
+.quiz-bank-alert-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.quiz-bank-status-pill.is-error {
+    background: #B91C1C;
+    border: 1px solid #991B1B;
+    color: #FFFFFF;
+}
+
+.quiz-bank-alert-sub,
+.quiz-bank-error-lead {
+    margin: 0 0 8px 0;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #991B1B;
+}
+
+.quiz-bank-alert-case + .quiz-bank-alert-case {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #FECACA;
+}
+
+.quiz-bank-alert-case-title {
+    font-size: 13.5px;
+    color: #7F1D1D;
+    margin-bottom: 6px;
+}
+
+.quiz-bank-section.is-error .quiz-bank-errors,
+.quiz-bank-alert-banner .quiz-bank-errors {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: #7F1D1D;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    margin: 6px 0 10px 0;
+}
+
+.quiz-bank-section.is-error .quiz-bank-errors code,
+.quiz-bank-alert-banner .quiz-bank-errors code {
+    display: inline-block;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    vertical-align: middle;
+    line-height: 1.4;
+    background: rgba(255, 255, 255, 0.85);
+    color: #7F1D1D;
+    border: 1px solid #FCA5A5;
+    padding: 2px 6px;
+    border-radius: 5px;
+}
+
+.quiz-bank-remediation {
+    font-size: 12.5px;
+    font-weight: 600;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    color: #7F1D1D;
+}
+
+.quiz-bank-remediation code {
+    display: inline-block;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    vertical-align: middle;
+    line-height: 1.4;
+    background: #FFFFFF;
+    color: #7F1D1D;
+    border: 1px solid #FCA5A5;
+    padding: 3px 8px;
+    border-radius: 6px;
 }
 
 @media (prefers-reduced-motion: reduce) {

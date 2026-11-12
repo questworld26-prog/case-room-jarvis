@@ -1,10 +1,8 @@
 === CASE KNOWLEDGE MANIFEST: EcoBrew ===
-Active Business Case: EcoBrew (Synthetic / Fictional Demonstration Case)
+Active Business Case: EcoBrew
 Primary Case Document(s): EcoBrew_Net_Zero_Transition_Plan_2024.pdf, EcoBrew_Case_Study_High_Value_Summary.pdf, EcoBrew_Case_Study_2024.pdf, EcoBrew_Annual_Sustainability_Report_2025.pdf
 Supporting Document(s): None
 Curated Supplementary Exhibit Files: supplementary_exhibits.txt
-
-[FICTIONAL CASE DISCLAIMER: EcoBrew is a synthetic company created exclusively for classroom companion demonstration and testing. All data, metrics, and scenarios are fictional.]
 
 CRITICAL GROUNDING DIRECTIVES FOR ASSISTANT:
 1. All factual statements, operational data, and numerical figures must be strictly grounded in this context.

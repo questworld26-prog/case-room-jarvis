@@ -28,3 +28,14 @@ Acceptance Criteria:
 - AC-QUIZ-003.3: When a case markdown quiz bank contains schema violations, the quiz system shall report explicit diagnostic errors identifying the offending line numbers.
 - AC-QUIZ-003.4: If a case study lacks a valid markdown quiz bank or contains syntax violations, then the quiz system shall log an error and display a diagnostic alert in the instructor admin panel.
 - AC-QUIZ-003.5: In the instructor admin panel, the system shall render the validation status of the active case quiz bank and display an interactive preview of the rendered question cards.
+
+## QUIZ-004: Prominent Startup and Admin Quiz Validation Diagnostics
+
+While launching the application or displaying the instructor admin panel, the quiz validation system shall highlight markdown quiz bank schema failures prominently across terminal startup output and web interface containers.
+
+Acceptance Criteria:
+- AC-QUIZ-004.1: When the application launches with syntax or schema errors in any case quiz bank, the startup sequence shall print a bordered alert banner listing the affected case study, line-level errors, and runnable validation command.
+- AC-QUIZ-004.2: While any case quiz bank fails validation, the instructor admin panel shall display a high-contrast error callout summarizing the invalid files and line diagnostics without revealing quiz answers before authentication.
+- AC-QUIZ-004.3: When the admin quiz bank preview renders an invalid quiz bank, the preview component shall apply distinct error-state alert styling with line-number callouts and remediation instructions in both light and dark themes.
+- AC-QUIZ-004.4: When the instructor reloads a case study, switches the case selection, refreshes context, broadcasts a mode change, or unlocks the admin panel after repairing a markdown quiz bank, the system shall clear resolved entries from the top validation banner and synchronize the live student quiz bank.
+- AC-QUIZ-004.5: When validating a markdown quiz bank containing duplicate question numbers, empty question prompts, duplicate or missing option letters, blank option text, or unrecognized question types, the quiz validation system shall report explicit line-numbered diagnostics for each violation.

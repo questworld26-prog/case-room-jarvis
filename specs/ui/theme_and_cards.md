@@ -44,4 +44,5 @@ Acceptance Criteria:
 - AC-UI-005.1: When rendering mode switch or post-quiz wait cards, the event card module shall apply `.gemini-event-card` and `.gemini-wait-card` classes with a contrast ratio of at least 7.0.
 - AC-UI-005.2: When rendering multiple-choice quiz cards, the quiz engine shall emit option pills with `role="button"`, `tabindex="0"`, and `data-choice` attributes while collapsing empty chat viewports.
 - AC-UI-005.3: When the Gradio `demo` application initializes or serves HTTP theme requests, the UI theme module shall inject `custom_css`, `HEAD_THEME_SCRIPT`, and `CLIENT_HERO_HTML`.
+- AC-UI-005.4: While light mode is active, the UI theme stylesheet shall apply a soft slate canvas background across the viewport shell and elevated white surface cards matching dark mode visual hierarchy.
 
