@@ -4,6 +4,17 @@ All notable changes to Case-Room are documented in this file.
 
 ---
 
+## [0.9.5] — 2026-11-12
+
+### Added
+- **Fail-Fast Gemini API Key Guard (`CACHE-004`)**: Added pre-flight key validation on application startup (`validate_gemini_api_key`) in `src/core/cache_manager.py` and `src/chatbot.py`. Missing, empty, or invalid API credentials trigger a prominent bordered alert banner and immediately halt execution with exit code 1 before the server starts.
+- **Uniform Apache-2.0 Headers & Enforcement**: Backfilled Apache License 2.0 copyright headers across all 41 remaining Python source and test files, and added a mandatory licensing directive in `AGENTS.md` for all future additions.
+
+### Changed
+- **Documentation & UI Assets**: Refreshed user, setup, classroom flow, and troubleshooting documentation with modern guidance and updated UI preview screenshots in `docs/images/`.
+
+---
+
 ## [0.9.0] — 2026-11-12
 
 ### Added
