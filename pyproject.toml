@@ -33,6 +33,11 @@ dependencies = [
     "weasyprint>=70.0",
 ]
 
+[project.urls]
+Homepage = "https://github.com/questworld26-prog/case-room-jarvis"
+Repository = "https://github.com/questworld26-prog/case-room-jarvis.git"
+Issues = "https://github.com/questworld26-prog/case-room-jarvis/issues"
+
 [tool.ruff]
 target-version = "py313"
 line-length = 120

@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  lint-and-test:
+    name: Lint & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install Dependencies
+        run: uv sync --frozen
+
+      - name: Code Quality & Linting (Ruff)
+        run: uvx ruff check .
+
+      - name: Run Core Test Suite
+        env:
+          GEMINI_API_KEY: "dummy-api-key-for-ci"
+        run: |
+          uv run pytest tests/test_chatbot.py tests/test_ui_theme.py tests/test_quiz_parser.py tests/test_chat_guardrails.py -v
